@@ -1,0 +1,7 @@
+[
+  { "text": "1+1=", "answers": ["2", "4", "6", "8", "10"], "correctIndex": 0 },
+  { "text": "2+2=", "answers": ["2", "4", "6", "8", "10"], "correctIndex": 1 },
+  { "text": "3+3=", "answers": ["2", "4", "6", "8", "10"], "correctIndex": 2 },
+  { "text": "4+4=", "answers": ["2", "4", "6", "8", "10"], "correctIndex": 3 },
+  { "text": "5+5=", "answers": ["2", "4", "6", "8", "10"], "correctIndex": 4 }
+]
