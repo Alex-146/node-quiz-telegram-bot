@@ -1,18 +1,32 @@
-const { Telegraf } = require("telegraf")
-const { 
-  createUser,
-  findUserByChatId,
-  generateQuizForUser,
-  restoreQuizForUser,
-  userVoteInQuiz,
-  getUserScore,
-  getUserCurrentQuestion,
-  isUserCompletedQuiz,
-} = require("../db/mongo")
+const { Telegraf, session, Markup } = require("telegraf")
+const { SCENE_NAMES, stage } = require("./telegram/scenes")
+const { config } = require("../config")
+const { findUserByChatId } = require("../db/mongo")
+const { fetchUser } = require("./telegram/middleware")
 
-function createBot(token) {
-  const bot = new Telegraf(token)
-  
+const diceStickers = [
+  "CAACAgIAAxkBAAICz2FnAzJlsD44Rf-DqBdEhjF8ujxwAAKODgACRfo5S7ATBZ_SKZynIQQ",
+  "CAACAgIAAxkBAAIC0WFnAzT3Xv4x0N1vHOYrTOlKw9g7AAL5EgACXdgwS6puViD8Je1sIQQ",
+  "CAACAgIAAxkBAAIC02FnA0WfkBmD_8ZO4WTiRNbrKVFIAAI8FAACVHk5S42vWA7uFhmzIQQ",
+  "CAACAgIAAxkBAAIC1WFnA0es6cmYgXegAgAB3gVvbp3vbgAC7xMAAj5GOUtpIklD_W4soyEE",
+  "CAACAgIAAxkBAAIC12FnA0nbx4PDaA6ATsh6hJZD5xX8AAIhEgAC-6w5S5GSzp7kLsRhIQQ",
+  "CAACAgIAAxkBAAIC2WFnA0slUnjlnlSa8wiQO9P1ZYBwAAJ_EQACwSE5SxrJ1RS2evlXIQQ",
+]
+
+// const pointsShop = [
+//   { amount: 50, price: 50 },
+//   { amount: 100, price: 90 },
+//   { amount: 500, price: 400 },
+//   { amount: 1000, price: 777 },
+// ]
+
+function createBot() {
+
+  const bot = new Telegraf(config.TELEGRAM_TOKEN)
+  bot.use(session())
+  bot.use(stage.middleware())
+
+  /*
   const startMiddleware = async (ctx, next) => {
     const id = ctx.message.from.id
     const candidate = await findUserByChatId(id)
@@ -30,10 +44,17 @@ function createBot(token) {
       ctx.reply("Welcome!")
     }
   })
+  */
+
+  bot.start((ctx) => {
+    ctx.scene.enter(SCENE_NAMES.START)
+  })
 
   const sendNextQuestionToUser = async (chatId) => {
+    const user = await findUserByChatId(chatId)
     const seconds = 10
-    const quizEntry = await getUserCurrentQuestion(chatId)
+    // const quizEntry = await getUserCurrentQuestion(chatId)
+    const quizEntry = user.getCurrentQuestion()
 
     const message = await bot.telegram.sendPoll(chatId, quizEntry.text, quizEntry.answers, {
       is_anonymous: false,
@@ -45,7 +66,8 @@ function createBot(token) {
       try {
         const poll = await bot.telegram.stopPoll(chatId, message.message_id)
         if (poll.total_voter_count === 0) {
-          await restoreQuizForUser(chatId)
+          // await restoreQuizForUser(chatId)
+          await user.restoreQuiz()
           bot.telegram.sendMessage(chatId, "Ты не успел ответить вовремя на этот вопрос, поэтому ты дисквалифицирован! Попробуй начать заново и у тебя всё получится")
         }
         else if (poll.total_voter_count > 1) {
@@ -60,6 +82,7 @@ function createBot(token) {
     setTimeout(stopHandler, wait)
   }
 
+  /*
   bot.command("poll", async (ctx) => {
     const id = ctx.from.id
     // todo: move use to separate scene
@@ -73,6 +96,7 @@ function createBot(token) {
     // when poll is closed via 'ctx.stopPoll'
     //console.log("1", ctx.poll)
   })
+  */
 
   bot.on("poll_answer", async (ctx) => {
     const pollId = ctx.pollAnswer.poll_id
@@ -81,10 +105,12 @@ function createBot(token) {
 
     console.log("poll_answer", pollId, userId, answerIndex)
 
-    await userVoteInQuiz(userId, answerIndex)
+    const user = await findUserByChatId(userId)
+    await user.voteInQuiz(answerIndex)
 
-    if (await isUserCompletedQuiz(userId)) {
-      const { correct, total } = await getUserScore(userId)
+    if (user.isQuizCompleted()) {
+      const { correct, total } = user.getQuizScore()
+      await user.restoreQuiz()
       bot.telegram.sendMessage(userId, `Твой результат: ${correct}/${total}`)
     }
     else {
@@ -92,13 +118,98 @@ function createBot(token) {
     }
   })
 
-  bot.on("text", ctx => {
-    ctx.reply(`echo: ${ctx.message.text}`)
+  bot.command("pay", fetchUser, async (ctx) => {
+    const user = ctx.state.user
+
+    if (user.hasActiveBill()) {
+      const k = Markup.inlineKeyboard([
+        [Markup.button.url("Оплатить", "https://example.com/?q=" + user.payments.current)],
+        [Markup.button.callback("Проверить", "payment:check")],
+        [Markup.button.callback("Отказаться", "payment:cancel")],
+      ])
+      ctx.reply("Оплата: " + user.payments.current, k)
+    }
+    else {
+      // todo: add more items
+      const k = Markup.inlineKeyboard([
+        [Markup.button.callback("100 очков", "payment:new")],
+      ])
+      ctx.reply("Оплата", k)
+    }
   })
+
+  bot.action("payment:new", fetchUser, async (ctx) => {
+    await ctx.answerCbQuery()
+
+    const amount = 100
+    const user = ctx.state.user
+    const id = await user.generateBill(amount)
+
+    // todo: move same keyboard to other place
+    const k = Markup.inlineKeyboard([
+      [Markup.button.url("Оплатить", "https://example.com/?q=" + user.payments.current)],
+      [Markup.button.callback("Проверить", "payment:check")],
+      [Markup.button.callback("Отказаться", "payment:cancel")],
+    ])
+
+    ctx.editMessageText(id, k)
+  })
+
+  bot.action("payment:cancel", fetchUser, async (ctx) => {
+    const user = ctx.state.user
+    await user.cancelPayment()
+    ctx.editMessageText("Вы отказались")
+  })
+
+  bot.action("payment:check", fetchUser, async (ctx) => {
+    const user = ctx.state.user
+    const success = await user.validateBillPayment()
+    if (success) {
+      ctx.editMessageText("Успешно пополнено")
+    }
+    else {
+      ctx.editMessageText("Не оплачено")
+    }
+  })
+
+  /*
+  bot.hears("Играть", (ctx) => {
+    const id = ctx.chat.id
+    // todo: check for empty user?
+    const user = await findUserByChatId(id)
+    await user.generateQuiz()
+
+    const quizEntry = user.getCurrentQuestion()
+  })
+  */
+
+  bot.on("sticker", ctx => {
+    ctx.reply(ctx.message.sticker.file_id)
+  })
+
+  bot.command("dice", ctx => {
+    const value = +ctx.message.text.split(" ")[1]
+    if (!Number.isNaN(value)) {
+      const index = value - 1
+      if (index >= 0 && index < 6) {
+        ctx.replyWithSticker(diceStickers[index])
+      }
+      else {
+        ctx.reply("invalid index")
+      }
+    }
+    else {
+      ctx.reply("send valid number")
+    }
+  })
+
+  // bot.on("text", ctx => {
+  //   ctx.reply(`echo: ${ctx.message.text}`)
+  // })
 
   return bot
 }
 
 module.exports = {
-  createBot
+  createBot,
 }

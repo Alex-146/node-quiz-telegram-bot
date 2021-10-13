@@ -3,19 +3,20 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
 
+const { config, isConfigValid } = require("./config")
+
 const telegram = require("./services/telegram")
 const db = require("./db/mongo")
 
-const token = process.env.TELEGRAM_TOKEN_MONDI
-
 async function main() {
-  if (!token) {
-    throw new Error("telegram token does not found")
+  
+  if (!isConfigValid()) {
+    throw new Error("config is not valid")
   }
 
   try {
-    await db.connect(process.env.MONGO_URI)
-    const bot = telegram.createBot(token)
+    await db.connect()
+    const bot = telegram.createBot()
     await bot.launch()
 
     console.log("application started")

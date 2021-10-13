@@ -2,9 +2,10 @@ const mongoose = require("mongoose")
 
 const User = require("../models/User")
 
-const { shuffle } = require("../utils")
+const { generateQuiz } = require("../utils")
 
-function connect(uri) {
+function connect() {
+  const uri = process.env.MONGO_URI_DEV
   return mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -14,6 +15,7 @@ function connect(uri) {
 function close() {
   return mongoose.connection.close()
 }
+
 async function createUser(id, invitedBy) {
   const user = new User({
     client: {
@@ -29,27 +31,21 @@ function findUserByChatId(id) {
   return User.findOne({ "client.id": id })
 }
 
+// done in schema methods
 async function generateQuizForUser(id) {
   const user = await findUserByChatId(id)
   if (!user) {
     return
   }
 
-  const quizArray = require("../data/quiz.json")
-  const shuffled = shuffle(quizArray).map(entry => {
-    const correctAnswer = entry.answers[entry.correctIndex]
-    entry.answers = shuffle(entry.answers)
-    entry.correctIndex = entry.answers.indexOf(correctAnswer)
-    return entry
-  })
-
   user.quiz.current.index = 0
-  user.quiz.current.questions = shuffled
+  user.quiz.current.questions = generateQuiz()
   
   await user.save()
   return user
 }
 
+// done in schema methods
 async function restoreQuizForUser(id) {
   const user = await findUserByChatId(id)
   if (!user) {
@@ -63,6 +59,7 @@ async function restoreQuizForUser(id) {
   return user
 }
 
+// done in schema methods
 async function userVoteInQuiz(id, answerIndex) {
   const user = await findUserByChatId(id)
   if (!user) {
@@ -76,6 +73,7 @@ async function userVoteInQuiz(id, answerIndex) {
   return user
 }
 
+// done in schema methods
 async function getUserScore(id) {
   const user = await findUserByChatId(id)
   if (!user) {
@@ -97,6 +95,7 @@ async function getUserScore(id) {
   return data
 }
 
+// done in schema methods
 async function getUserCurrentQuestion(id) {
   const user = await findUserByChatId(id)
   if (!user) {
@@ -112,6 +111,7 @@ async function getUserCurrentQuestion(id) {
   }
 }
 
+// done in schema methods
 async function isUserCompletedQuiz(id) {
   const user = await findUserByChatId(id)
   if (!user) {
@@ -121,6 +121,7 @@ async function isUserCompletedQuiz(id) {
 }
 
 module.exports = {
+  User,
   connect,
   close,
   createUser,

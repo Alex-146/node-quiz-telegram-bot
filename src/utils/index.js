@@ -10,7 +10,19 @@ function shuffle(array) {
   return array
 }
 
+function generateQuiz() {
+  const quizArray = require("../data/quiz.json")
+  const shuffled = shuffle(quizArray).map(entry => {
+    const correctAnswer = entry.answers[entry.correctIndex]
+    entry.answers = shuffle(entry.answers)
+    entry.correctIndex = entry.answers.indexOf(correctAnswer)
+    return entry
+  })
+  return shuffled
+}
+
 module.exports = {
   sleep,
-  shuffle
+  shuffle,
+  generateQuiz
 }

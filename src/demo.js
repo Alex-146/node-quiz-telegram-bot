@@ -4,7 +4,7 @@ require("dotenv").config()
 
 async function main() {
   try {
-    await db.connect(process.env.MONGO_URI)
+    await db.connect()
 
     // console.log(await db.restoreQuizForUser(146))
     // console.log(await db.generateQuizForUser(146))
