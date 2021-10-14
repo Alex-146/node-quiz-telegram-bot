@@ -1,10 +1,17 @@
 const db = require("./db/mongo")
+const qiwi = require("./services/qiwi")
 
 require("dotenv").config()
 
 async function main() {
   try {
-    await db.connect()
+    // await qiwi.createPayment(3)
+    const id = "82652164-8fd0-4327-8b5e-5e4fadb40e1f"
+    
+    console.log(await qiwi.getPaymentStatus(id))
+    console.log(await qiwi.cancelPayment(id))
+
+    // await db.connect()
 
     // console.log(await db.restoreQuizForUser(146))
     // console.log(await db.generateQuizForUser(146))

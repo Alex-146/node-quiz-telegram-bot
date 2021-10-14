@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose")
 
+const payments = require("../services/qiwi")
+
 const schema = new Schema({
   client: {
     id: {
@@ -124,48 +126,87 @@ schema.methods.restoreQuiz = function() {
   return this.save()
 }
 
-schema.methods.hasActiveBill = function() {
-  // todo: validate time using qiwi service
-  return this.payments.current.length > 0
+schema.methods.hasActiveBill = async function() {
+  const id = this.payments.current
+  const response = await payments.getPaymentStatus(id)
+  if (!response.ok) {
+    console.log("error when checking")
+    return {
+      active: false
+    } 
+  }
+
+  const { status, amount, payUrl } = response.data
+  const active = status.value === "WAITING"
+  return {
+    active,
+    status,
+    amount,
+    payUrl,
+  }
 }
 
 schema.methods.generateBill = async function(amount) {
-  if (this.hasActiveBill()) {
-    return this.payments.current
+  const bill = await this.hasActiveBill()
+  if (bill.active) {
+    const { payUrl } = bill
+    return {
+      payUrl
+    }
   }
   else {
-    // todo: qiwi service generate id and get link to it
-    const id = `payment:${amount}:${this.client.id}:${Date.now()}`
-    this.payments.current = id
+    const response = await payments.createPayment(amount)
+
+    if (!response.ok) {
+      return console.log("error when fetching payment status")
+    }
+
+    const { billId, payUrl } = response.data
     
+    this.payments.current = billId
     await this.save()
-    return id
+
+    return {
+      payUrl
+    }
   }
 }
 
-schema.methods.cancelPayment = function() {
+schema.methods.cancelPayment = async function() {
+  const id = this.payments.current
+  await payments.cancelPayment(id)
+  
+  this.payments.history.push(id)
   this.payments.current = ""
   return this.save()
 }
 
 schema.methods.validateBillPayment = async function() {
-
-  // todo: qiwi validate bill for payment
-  // todo: check if first payment has active promo, if true - add more points to balance
-
-  if (!this.hasActiveBill()) return
+  // todo: should I check time first?
+  const { active } = await this.hasActiveBill()
+  if (!active) return false
 
   const id = this.payments.current
+  const response = await payments.getPaymentStatus(id)
+
+  if (!response.ok) {
+    return console.log("error when fetching payment status")
+  }
+
+  const { status, amount } = response.data
   
-  if (true) {
-    const amount = +id.split(":")[1]
-    this.payments.balance += amount
+  if (status.value === "PAID") {
+    // todo: check if first payment has active promo, if true - add more points to balance
+    this.payments.balance += parseInt(amount.value) * 2
     this.payments.history.push(id)
     this.payments.current = ""
 
     await this.save()
     return true
   }
+  // else if (status.value === "WAITING") {
+  //   return false
+  // }
 
   return false
 }

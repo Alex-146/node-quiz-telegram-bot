@@ -1,9 +1,4 @@
-
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
-}
-
-const { config, isConfigValid } = require("./config")
+const { isConfigValid } = require("./config")
 
 const telegram = require("./services/telegram")
 const db = require("./db/mongo")
@@ -14,11 +9,11 @@ async function main() {
     throw new Error("config is not valid")
   }
 
+  const bot = telegram.createBot()
+
   try {
     await db.connect()
-    const bot = telegram.createBot()
     await bot.launch()
-
     console.log("application started")
 
     process.once("SIGINT", () => bot.stop("SIGINT"))
@@ -26,6 +21,8 @@ async function main() {
   }
   catch(error) {
     console.log(error)
+
+    bot.stop()
   }
 }
 

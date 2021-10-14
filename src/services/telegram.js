@@ -3,6 +3,7 @@ const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { config } = require("../config")
 const { findUserByChatId } = require("../db/mongo")
 const { fetchUser } = require("./telegram/middleware")
+const { getPaymentKeyboard, generateShopKeyboard } = require("./telegram/keyboards")
 
 const diceStickers = [
   "CAACAgIAAxkBAAICz2FnAzJlsD44Rf-DqBdEhjF8ujxwAAKODgACRfo5S7ATBZ_SKZynIQQ",
@@ -119,40 +120,44 @@ function createBot() {
   })
 
   bot.command("pay", fetchUser, async (ctx) => {
+    return ctx.reply("items", generateShopKeyboard())
+    
     const user = ctx.state.user
 
-    if (user.hasActiveBill()) {
-      const k = Markup.inlineKeyboard([
-        [Markup.button.url("Оплатить", "https://example.com/?q=" + user.payments.current)],
-        [Markup.button.callback("Проверить", "payment:check")],
-        [Markup.button.callback("Отказаться", "payment:cancel")],
-      ])
-      ctx.reply("Оплата: " + user.payments.current, k)
+    const { active, payUrl } = await user.hasActiveBill()
+    if (active) {
+      const k = getPaymentKeyboard(payUrl)
+      ctx.reply("Оплата", k)
     }
     else {
       // todo: add more items
       const k = Markup.inlineKeyboard([
         [Markup.button.callback("100 очков", "payment:new")],
       ])
-      ctx.reply("Оплата", k)
+      ctx.reply("Пополнение", k)
     }
   })
 
+  // old way
   bot.action("payment:new", fetchUser, async (ctx) => {
     await ctx.answerCbQuery()
 
-    const amount = 100
+    // todo: amount from regex
+    const amount = 10
     const user = ctx.state.user
-    const id = await user.generateBill(amount)
 
-    // todo: move same keyboard to other place
-    const k = Markup.inlineKeyboard([
-      [Markup.button.url("Оплатить", "https://example.com/?q=" + user.payments.current)],
-      [Markup.button.callback("Проверить", "payment:check")],
-      [Markup.button.callback("Отказаться", "payment:cancel")],
-    ])
+    const { payUrl } = await user.generateBill(amount)
+    const k = getPaymentKeyboard(payUrl)
+    ctx.editMessageText("Новая оплата", k)
+  })
 
-    ctx.editMessageText(id, k)
+  const paymentRegex = /payment:new:(.+)/
+  bot.action(paymentRegex, async (ctx) => {
+    const json = paymentRegex.exec(ctx.callbackQuery.data)[1]
+    const item = JSON.parse(json)
+
+    await ctx.answerCbQuery(item.title)
+    ctx.reply(JSON.stringify(item))
   })
 
   bot.action("payment:cancel", fetchUser, async (ctx) => {
@@ -168,7 +173,7 @@ function createBot() {
       ctx.editMessageText("Успешно пополнено")
     }
     else {
-      ctx.editMessageText("Не оплачено")
+      ctx.answerCbQuery("Не оплачено")
     }
   })
 
@@ -183,6 +188,7 @@ function createBot() {
   })
   */
 
+  /*
   bot.on("sticker", ctx => {
     ctx.reply(ctx.message.sticker.file_id)
   })
@@ -202,10 +208,11 @@ function createBot() {
       ctx.reply("send valid number")
     }
   })
+  */
 
-  // bot.on("text", ctx => {
-  //   ctx.reply(`echo: ${ctx.message.text}`)
-  // })
+  bot.on("text", ctx => {
+    ctx.reply(`echo: ${ctx.message.text}`)
+  })
 
   return bot
 }
