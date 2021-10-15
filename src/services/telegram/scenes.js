@@ -96,7 +96,7 @@ function mainScene() {
   })
 
   // todo: middleware
-  scene.hears(MESSAGES.PROFILE, fetchUser, async (ctx) => {
+  scene.hears(MESSAGES.PROFILE, fetchUser(), async (ctx) => {
     const user = ctx.state.user
     const id = user.client.id
     const balance = user.payments.balance

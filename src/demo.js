@@ -5,9 +5,8 @@ require("dotenv").config()
 
 async function main() {
   try {
-    // await qiwi.createPayment(3)
-    const id = "82652164-8fd0-4327-8b5e-5e4fadb40e1f"
-    
+    //console.log(await qiwi.createDemoPayment())
+    const id = "demo-1634328878235"
     console.log(await qiwi.getPaymentStatus(id))
     console.log(await qiwi.cancelPayment(id))
 

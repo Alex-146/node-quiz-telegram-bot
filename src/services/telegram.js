@@ -1,28 +1,13 @@
-const { Telegraf, session, Markup } = require("telegraf")
+const { Telegraf, session } = require("telegraf")
 const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { config } = require("../config")
+const { paymentDurationInHours, getItemById } = require("./telegram/config")
 const { findUserByChatId } = require("../db/mongo")
 const { fetchUser } = require("./telegram/middleware")
 const { getPaymentKeyboard, generateShopKeyboard } = require("./telegram/keyboards")
-
-const diceStickers = [
-  "CAACAgIAAxkBAAICz2FnAzJlsD44Rf-DqBdEhjF8ujxwAAKODgACRfo5S7ATBZ_SKZynIQQ",
-  "CAACAgIAAxkBAAIC0WFnAzT3Xv4x0N1vHOYrTOlKw9g7AAL5EgACXdgwS6puViD8Je1sIQQ",
-  "CAACAgIAAxkBAAIC02FnA0WfkBmD_8ZO4WTiRNbrKVFIAAI8FAACVHk5S42vWA7uFhmzIQQ",
-  "CAACAgIAAxkBAAIC1WFnA0es6cmYgXegAgAB3gVvbp3vbgAC7xMAAj5GOUtpIklD_W4soyEE",
-  "CAACAgIAAxkBAAIC12FnA0nbx4PDaA6ATsh6hJZD5xX8AAIhEgAC-6w5S5GSzp7kLsRhIQQ",
-  "CAACAgIAAxkBAAIC2WFnA0slUnjlnlSa8wiQO9P1ZYBwAAJ_EQACwSE5SxrJ1RS2evlXIQQ",
-]
-
-// const pointsShop = [
-//   { amount: 50, price: 50 },
-//   { amount: 100, price: 90 },
-//   { amount: 500, price: 400 },
-//   { amount: 1000, price: 777 },
-// ]
+const { getLifetimeByHours } = require("../utils")
 
 function createBot() {
-
   const bot = new Telegraf(config.TELEGRAM_TOKEN)
   bot.use(session())
   bot.use(stage.middleware())
@@ -83,6 +68,30 @@ function createBot() {
     setTimeout(stopHandler, wait)
   }
 
+  function showCurrentPayment(ctx) {
+    const { status, payUrl, customFields } = ctx.state.bill
+    if (status.value === "WAITING") {
+      const item = getItemById(customFields.itemId)
+      const text = `У вас есть активный товар,  оплата: ${item.title}`
+      const kb = getPaymentKeyboard(payUrl)
+      if (ctx.message) {
+        ctx.reply(text, kb)
+      }
+      else {
+        ctx.editMessageText(text, kb)
+      }
+    }
+    else if (status.value === "PAID") {
+      const text = "Вы уже оплатили этот товар"
+      if (ctx.message) {
+        ctx.reply(text)
+      }
+      else {
+        ctx.editMessageText(text)
+      }
+    }
+  }
+
   /*
   bot.command("poll", async (ctx) => {
     const id = ctx.from.id
@@ -119,58 +128,76 @@ function createBot() {
     }
   })
 
-  bot.command("pay", fetchUser, async (ctx) => {
-    return ctx.reply("items", generateShopKeyboard())
-    
+  bot.command("pay", fetchUser(), async (ctx) => {
     const user = ctx.state.user
+    const bill = await user.hasActiveBill()
 
-    const { active, payUrl } = await user.hasActiveBill()
-    if (active) {
-      const k = getPaymentKeyboard(payUrl)
-      ctx.reply("Оплата", k)
+    if (!bill) {
+      // show shop items to user
+      ctx.reply("Магазин товаров", generateShopKeyboard())
     }
     else {
-      // todo: add more items
-      const k = Markup.inlineKeyboard([
-        [Markup.button.callback("100 очков", "payment:new")],
-      ])
-      ctx.reply("Пополнение", k)
+      // send bill that user already has
+      ctx.state.bill = bill
+      showCurrentPayment(ctx)
     }
-  })
-
-  // old way
-  bot.action("payment:new", fetchUser, async (ctx) => {
-    await ctx.answerCbQuery()
-
-    // todo: amount from regex
-    const amount = 10
-    const user = ctx.state.user
-
-    const { payUrl } = await user.generateBill(amount)
-    const k = getPaymentKeyboard(payUrl)
-    ctx.editMessageText("Новая оплата", k)
   })
 
   const paymentRegex = /payment:new:(.+)/
-  bot.action(paymentRegex, async (ctx) => {
-    const json = paymentRegex.exec(ctx.callbackQuery.data)[1]
-    const item = JSON.parse(json)
+  bot.action(paymentRegex, fetchUser(), async (ctx) => {
+    await ctx.answerCbQuery()
 
-    await ctx.answerCbQuery(item.title)
-    ctx.reply(JSON.stringify(item))
+    const user = ctx.state.user
+    const bill = await user.hasActiveBill()
+
+    if (!bill) {
+      // create new bill according to clicked item
+      const itemId = paymentRegex.exec(ctx.callbackQuery.data)[1]
+      const item = getItemById(itemId)
+  
+      const { payUrl } = await user.generateBill({
+        billId: `${ctx.from.id}-${Date.now()}`,
+        amount: item.price,
+        currency: "RUB",
+        comment: "Оплата товара",
+        expirationDateTime: getLifetimeByHours(paymentDurationInHours),
+        customFields: {
+          itemId: item.id
+        }
+      })
+      const text = `Новая оплата: ${item.title}, счет действителен: ${paymentDurationInHours} час(а)`
+      ctx.editMessageText(text, getPaymentKeyboard(payUrl))
+    }
+    else {
+      // send bill that user already has
+      ctx.state.bill = bill
+      showCurrentPayment(ctx)
+    }
   })
 
-  bot.action("payment:cancel", fetchUser, async (ctx) => {
+  // todo: использовать middleware для обработки покупки если она завершена (как в payment:check)
+  bot.action("payment:cancel", fetchUser(), async (ctx) => {
     const user = ctx.state.user
     await user.cancelPayment()
+    // todo: check if bill already paid
     ctx.editMessageText("Вы отказались")
   })
 
-  bot.action("payment:check", fetchUser, async (ctx) => {
+  bot.action("payment:check", fetchUser(), async (ctx) => {
     const user = ctx.state.user
-    const success = await user.validateBillPayment()
+    const response = await user.validateBillPayment()
+
+    if (response.error) {
+      return ctx.editMessageText(response.error)
+    }
+
+    const { success, customFields } = response
     if (success) {
-      ctx.editMessageText("Успешно пополнено")
+      const item = getItemById(customFields.itemId)
+      // todo: check if first payment has active promo, if true - add more points to balance
+      user.payments.balance += item.amount
+      await user.save()
+      ctx.editMessageText(`Успешно пополнено, на счету: ${user.payments.balance}`)
     }
     else {
       ctx.answerCbQuery("Не оплачено")
@@ -185,28 +212,6 @@ function createBot() {
     await user.generateQuiz()
 
     const quizEntry = user.getCurrentQuestion()
-  })
-  */
-
-  /*
-  bot.on("sticker", ctx => {
-    ctx.reply(ctx.message.sticker.file_id)
-  })
-
-  bot.command("dice", ctx => {
-    const value = +ctx.message.text.split(" ")[1]
-    if (!Number.isNaN(value)) {
-      const index = value - 1
-      if (index >= 0 && index < 6) {
-        ctx.replyWithSticker(diceStickers[index])
-      }
-      else {
-        ctx.reply("invalid index")
-      }
-    }
-    else {
-      ctx.reply("send valid number")
-    }
   })
   */
 

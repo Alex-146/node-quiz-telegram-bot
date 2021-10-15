@@ -130,45 +130,34 @@ schema.methods.hasActiveBill = async function() {
   const id = this.payments.current
   const response = await payments.getPaymentStatus(id)
   if (!response.ok) {
-    console.log("error when checking")
-    return {
-      active: false
-    } 
+    // if here it means no id
+    return false
   }
 
-  const { status, amount, payUrl } = response.data
-  const active = status.value === "WAITING"
+  const { status, amount, payUrl, customFields } = response.data
   return {
-    active,
     status,
     amount,
     payUrl,
+    customFields
   }
 }
 
-schema.methods.generateBill = async function(amount) {
-  const bill = await this.hasActiveBill()
-  if (bill.active) {
-    const { payUrl } = bill
-    return {
-      payUrl
-    }
+schema.methods.generateBill = async function({ billId, amount, currency, comment, expirationDateTime, customFields }) {
+  
+  const response = await payments.createPayment({ billId, amount, currency, comment, expirationDateTime, customFields })
+  if (!response.ok) {
+    console.log("error occured when creating payment")
+    return
   }
-  else {
-    const response = await payments.createPayment(amount)
 
-    if (!response.ok) {
-      return console.log("error when fetching payment status")
-    }
+  const { billId: id, payUrl } = response.data
+  
+  this.payments.current = id
+  await this.save()
 
-    const { billId, payUrl } = response.data
-    
-    this.payments.current = billId
-    await this.save()
-
-    return {
-      payUrl
-    }
+  return {
+    payUrl
   }
 }
 
@@ -182,33 +171,35 @@ schema.methods.cancelPayment = async function() {
 }
 
 schema.methods.validateBillPayment = async function() {
-  // todo: should I check time first?
-  const { active } = await this.hasActiveBill()
-  if (!active) return false
-
-  const id = this.payments.current
-  const response = await payments.getPaymentStatus(id)
-
-  if (!response.ok) {
-    return console.log("error when fetching payment status")
+  const bill = await this.hasActiveBill()
+  if (!bill) {
+    return {
+      error: "error - user has no bill when validating payment"
+    }
   }
 
-  const { status, amount } = response.data
+  const { billId, status, customFields } = bill
+
+  if (this.payments.history.includes(billId)) {
+    return {
+      error: "error - user already paid this bill"
+    }
+  }
   
   if (status.value === "PAID") {
-    // todo: check if first payment has active promo, if true - add more points to balance
-    this.payments.balance += parseInt(amount.value) * 2
-    this.payments.history.push(id)
+    this.payments.history.push(billId)
     this.payments.current = ""
 
     await this.save()
-    return true
+    return {
+      success: true,
+      customFields
+    }
   }
-  // else if (status.value === "WAITING") {
-  //   return false
-  // }
 
-  return false
+  return {
+    success: false
+  }
 }
 
 module.exports = model("User", schema)

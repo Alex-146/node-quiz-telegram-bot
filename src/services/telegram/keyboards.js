@@ -2,8 +2,7 @@ const { Markup } = require("telegraf")
 
 const { MESSAGES } = require("./messages")
 
-const { config } = require("../../config")
-const { shop } = require("./config.json")
+const { getItems } = require("./config")
 
 const startKeyboard = Markup.keyboard([
   [MESSAGES.YES],
@@ -25,14 +24,10 @@ function getPaymentKeyboard(paymentUrl) {
 }
 
 function generateShopKeyboard() {
-  const items = []
-  if (!config.IS_PRODUCTION) {
-    items.push(...shop.devItems)
-  }
-  items.push(...shop.items)
+  const items = getItems()
 
   const keyboard = Markup.inlineKeyboard([
-    ...items.map(item => [Markup.button.callback(item.title, `payment:new:${JSON.stringify(item)}`)])
+    ...items.map(item => [Markup.button.callback(item.title, `payment:new:${item.id}`)])
   ])
   return keyboard
 }

@@ -11,6 +11,7 @@ function shuffle(array) {
 }
 
 function generateQuiz() {
+  // todo: provide array
   const quizArray = require("../data/quiz.json")
   const shuffled = shuffle(quizArray).map(entry => {
     const correctAnswer = entry.answers[entry.correctIndex]
@@ -21,8 +22,43 @@ function generateQuiz() {
   return shuffled
 }
 
+/**
+* Generate lifetime in format
+* @param {number} hours - Hours of lifetime
+* @return {string} Lifetime in ISO
+*/
+function getLifetimeByHours(hours = 2) {
+  const date = new Date()
+  const timePlused = date.getTime() + hours * 60 * 60 * 1000
+  date.setTime(timePlused)
+  return normalizeDate(date)
+}
+
+/**
+* Normalize date in api format
+* @param {Date} date - Date object
+* @returns {string} Date in api format
+*/
+function normalizeDate(date) {
+  const tzo = -date.getTimezoneOffset()
+  const dif = tzo >= 0 ? '+' : '-'
+  const pad = function (num) {
+    const norm = Math.floor(Math.abs(num))
+    return (norm < 10 ? '0' : '') + norm
+  };
+  return date.getFullYear() +
+    '-' + pad(date.getMonth() + 1) +
+    '-' + pad(date.getDate()) +
+    'T' + pad(date.getHours()) +
+    ':' + pad(date.getMinutes()) +
+    ':' + pad(date.getSeconds()) +
+    dif + pad(tzo / 60) +
+    ':' + pad(tzo % 60)
+}
+
 module.exports = {
   sleep,
   shuffle,
-  generateQuiz
+  generateQuiz,
+  getLifetimeByHours
 }
