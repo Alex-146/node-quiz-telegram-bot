@@ -6,6 +6,8 @@ const MESSAGES = {
   RETURN: "Вернуться",
   PLAY: "Играть",
   PROFILE: "Профиль",
+  SHOP: "Магазин",
+  WITHDRAW: "Вывод средств"
 }
 
 module.exports = {

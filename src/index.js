@@ -13,6 +13,7 @@ async function main() {
 
   try {
     await db.connect()
+    await bot.telegram.deleteWebhook({ drop_pending_updates: true })
     await bot.launch()
     console.log("application started")
 

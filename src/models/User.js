@@ -83,11 +83,12 @@ schema.methods.generateQuiz = function() {
 
 schema.methods.getCurrentQuestion = function() {
   const index = this.quiz.current.index
-  const { text, answers } = this.quiz.current.questions[index]
+  const { text, answers, correctIndex } = this.quiz.current.questions[index]
 
   return {
     text,
-    answers
+    answers,
+    correctIndex,
   }
 }
 
@@ -199,6 +200,28 @@ schema.methods.validateBillPayment = async function() {
 
   return {
     success: false
+  }
+}
+
+schema.methods.isDeveloper = function() {
+  return this.roles.includes("developer")
+}
+
+schema.methods.activatePromocode = function(value) {
+  this.payments.promocode = {
+    active: true,
+    value
+  }
+  return this.save()
+}
+
+schema.methods.getQuizStats = function() {
+  const history = this.quiz.history
+  const success = history.filter(entry => entry.questions.every(q => q.answerIndex === q.correctIndex)).length
+  const total = history.length
+  return {
+    success,
+    total
   }
 }
 

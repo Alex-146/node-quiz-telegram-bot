@@ -1,48 +1,48 @@
-const { Telegraf, session } = require("telegraf")
+const { Telegraf, session, Markup } = require("telegraf")
 const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { config } = require("../config")
-const { paymentDurationInHours, getItemById } = require("./telegram/config")
-const { findUserByChatId } = require("../db/mongo")
+
+const { getItemById } = require("./telegram/config")
+const { paymentDurationInHours, quiz, promocode, payments } = require("./telegram/config.json")
+
+const { createUser, findUserByChatId } = require("../db/mongo")
 const { fetchUser } = require("./telegram/middleware")
-const { getPaymentKeyboard, generateShopKeyboard } = require("./telegram/keyboards")
-const { getLifetimeByHours } = require("../utils")
+const {
+  paymentInlineKeyboard,
+  paymentItemsInlineKeyboard,
+  mainKeyboard,
+} = require("./telegram/keyboards")
+const { MESSAGES } = require("./telegram/messages")
+const { getLifetimeByHours, paragraphMessage } = require("../utils")
 
 function createBot() {
   const bot = new Telegraf(config.TELEGRAM_TOKEN)
   bot.use(session())
   bot.use(stage.middleware())
 
-  /*
-  const startMiddleware = async (ctx, next) => {
-    const id = ctx.message.from.id
+  bot.start(async (ctx) => {
+    const id = ctx.chat.id
     const candidate = await findUserByChatId(id)
     if (!candidate) {
       await createUser(id)
-    }
-    next()
-  }
-
-  bot.start(startMiddleware, (ctx) => {
-    if (ctx.startPayload) {
-      ctx.reply(ctx.startPayload)
+      ctx.scene.enter(SCENE_NAMES.START)
     }
     else {
-      ctx.reply("Welcome!")
+      ctx.reply("todo: display rules", mainKeyboard)
     }
   })
-  */
 
-  bot.start((ctx) => {
-    ctx.scene.enter(SCENE_NAMES.START)
-  })
+  const sendNextQuestionToUser = async (ctx) => {
+    const seconds = quiz.voteTimeInSeconds
 
-  const sendNextQuestionToUser = async (chatId) => {
-    const user = await findUserByChatId(chatId)
-    const seconds = 10
-    // const quizEntry = await getUserCurrentQuestion(chatId)
-    const quizEntry = user.getCurrentQuestion()
+    const user = ctx.state.user
+    const chatId = user.client.id
+    const { text, answers, correctIndex } = user.getCurrentQuestion()
 
-    const message = await bot.telegram.sendPoll(chatId, quizEntry.text, quizEntry.answers, {
+    // developer role
+    const displayAnswers = user.isDeveloper() ? answers.map((t, i) => i === correctIndex ? "😎" + t : t) : answers
+
+    const message = await bot.telegram.sendPoll(chatId, text, displayAnswers, {
       is_anonymous: false,
       open_period: seconds,
     })
@@ -52,9 +52,8 @@ function createBot() {
       try {
         const poll = await bot.telegram.stopPoll(chatId, message.message_id)
         if (poll.total_voter_count === 0) {
-          // await restoreQuizForUser(chatId)
           await user.restoreQuiz()
-          bot.telegram.sendMessage(chatId, "Ты не успел ответить вовремя на этот вопрос, поэтому ты дисквалифицирован! Попробуй начать заново и у тебя всё получится")
+          bot.telegram.sendMessage(chatId, "Ты не успел ответить вовремя на этот вопрос, поэтому ты дисквалифицирован! Попробуй начать заново и у тебя всё получится", mainKeyboard)
         }
         else if (poll.total_voter_count > 1) {
           // может ли пользователь переслать сообщение чтобы проголосовал кто-то другой?
@@ -73,7 +72,7 @@ function createBot() {
     if (status.value === "WAITING") {
       const item = getItemById(customFields.itemId)
       const text = `У вас есть активный товар,  оплата: ${item.title}`
-      const kb = getPaymentKeyboard(payUrl)
+      const kb = paymentInlineKeyboard(payUrl)
       if (ctx.message) {
         ctx.reply(text, kb)
       }
@@ -92,22 +91,6 @@ function createBot() {
     }
   }
 
-  /*
-  bot.command("poll", async (ctx) => {
-    const id = ctx.from.id
-    // todo: move use to separate scene
-    await generateQuizForUser(id)
-    sendNextQuestionToUser(id)
-  })
-
-  bot.on("poll", (ctx) => {
-    // this will shown in 2 cases (AFAIK)
-    // when users clicks answer in anpnymous poll
-    // when poll is closed via 'ctx.stopPoll'
-    //console.log("1", ctx.poll)
-  })
-  */
-
   bot.on("poll_answer", async (ctx) => {
     const pollId = ctx.pollAnswer.poll_id
     const userId = ctx.pollAnswer.user.id
@@ -120,21 +103,32 @@ function createBot() {
 
     if (user.isQuizCompleted()) {
       const { correct, total } = user.getQuizScore()
+
+      if (correct === total) {
+        user.payments.balance += quiz.successRewardPrice
+        await user.save()
+        const text = paragraphMessage(`Твой результат: ${correct}/${total}`, `Начислено ${quiz.successRewardPrice} баллов`, `На счету ${user.payments.balance} баллов`)
+        ctx.telegram.sendMessage(userId, text, mainKeyboard)
+      }
+      else {
+        const text = paragraphMessage(`Твой результат: ${correct}/${total}`, `Попробуй еще, у тебя всё получится!`)
+        ctx.telegram.sendMessage(userId, text, mainKeyboard)
+      }
       await user.restoreQuiz()
-      bot.telegram.sendMessage(userId, `Твой результат: ${correct}/${total}`)
     }
     else {
-      sendNextQuestionToUser(userId)
+      ctx.state.user = user
+      sendNextQuestionToUser(ctx)
     }
   })
 
-  bot.command("pay", fetchUser(), async (ctx) => {
+  bot.hears(MESSAGES.SHOP, fetchUser(), async (ctx) => {
     const user = ctx.state.user
     const bill = await user.hasActiveBill()
 
     if (!bill) {
       // show shop items to user
-      ctx.reply("Магазин товаров", generateShopKeyboard())
+      ctx.reply("Пополнение баланса", paymentItemsInlineKeyboard(ctx))
     }
     else {
       // send bill that user already has
@@ -166,7 +160,7 @@ function createBot() {
         }
       })
       const text = `Новая оплата: ${item.title}, счет действителен: ${paymentDurationInHours} час(а)`
-      ctx.editMessageText(text, getPaymentKeyboard(payUrl))
+      ctx.editMessageText(text, paymentInlineKeyboard(payUrl))
     }
     else {
       // send bill that user already has
@@ -194,8 +188,13 @@ function createBot() {
     const { success, customFields } = response
     if (success) {
       const item = getItemById(customFields.itemId)
-      // todo: check if first payment has active promo, if true - add more points to balance
-      user.payments.balance += item.amount
+      let amount = item.amount
+      // check if first payment has active promo, if true - add more points to balance
+      if (user.payments.promocode.active) {
+        amount += promocode.bonusAmount
+        user.payments.promocode.active = false
+      }
+      user.payments.balance += amount
       await user.save()
       ctx.editMessageText(`Успешно пополнено, на счету: ${user.payments.balance}`)
     }
@@ -204,16 +203,42 @@ function createBot() {
     }
   })
 
-  /*
-  bot.hears("Играть", (ctx) => {
-    const id = ctx.chat.id
-    // todo: check for empty user?
-    const user = await findUserByChatId(id)
-    await user.generateQuiz()
+  bot.hears(MESSAGES.PLAY, fetchUser(), async (ctx) => {
+    const user = ctx.state.user
+    if (user.payments.balance < quiz.playPrice) {
+      const text = paragraphMessage("Недостаточно баллов на счету", `У тебя: ${user.payments.balance}`, `Требуется: ${quiz.playPrice}`)
+      return ctx.reply(text)
+    }
+    
+    user.payments.balance -= quiz.playPrice
+    await user.save()
 
-    const quizEntry = user.getCurrentQuestion()
+    await ctx.reply("Be ready!", Markup.removeKeyboard())
+    await user.generateQuiz()
+    sendNextQuestionToUser(ctx)
   })
-  */
+
+  bot.hears(MESSAGES.PROFILE, fetchUser(), (ctx) => {
+    const user = ctx.state.user
+
+    const id = user.client.id
+    const balance = user.payments.balance
+
+    const text = paragraphMessage(`id: ${id}`, `balance: ${balance}`)
+    ctx.reply(text)
+  })
+
+  bot.hears(MESSAGES.WITHDRAW, fetchUser(), (ctx) => {
+    const user = ctx.state.user
+    const { success, total } = user.getQuizStats()
+    if (success < payments.minWinsInQuiz) {
+      const text = paragraphMessage(`Для вывода нужно иметь как минимум ${payments.minWinsInQuiz} побед`, `У вас ${success} (всего ${total})`)
+      ctx.reply(text)
+    }
+    else {
+      ctx.reply("Вывод временно отключен")
+    }
+  })
 
   bot.on("text", ctx => {
     ctx.reply(`echo: ${ctx.message.text}`)

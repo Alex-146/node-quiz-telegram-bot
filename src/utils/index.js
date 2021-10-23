@@ -22,6 +22,10 @@ function generateQuiz() {
   return shuffled
 }
 
+function paragraphMessage(...entries) {
+  return entries.join("\n")
+}
+
 /**
 * Generate lifetime in format
 * @param {number} hours - Hours of lifetime
@@ -60,5 +64,6 @@ module.exports = {
   sleep,
   shuffle,
   generateQuiz,
+  paragraphMessage,
   getLifetimeByHours
 }

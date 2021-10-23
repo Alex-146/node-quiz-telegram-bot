@@ -2,7 +2,7 @@ const { Markup } = require("telegraf")
 
 const { MESSAGES } = require("./messages")
 
-const { getItems } = require("./config")
+const { shop } = require("./config.json")
 
 const startKeyboard = Markup.keyboard([
   [MESSAGES.YES],
@@ -12,9 +12,10 @@ const startKeyboard = Markup.keyboard([
 const mainKeyboard = Markup.keyboard([
   [MESSAGES.PROFILE],
   [MESSAGES.PLAY],
+  [MESSAGES.SHOP, MESSAGES.WITHDRAW],
 ]).resize()
 
-function getPaymentKeyboard(paymentUrl) {
+function paymentInlineKeyboard(paymentUrl) {
   const keyboard = Markup.inlineKeyboard([
     [Markup.button.url("Оплатить", paymentUrl)],
     [Markup.button.callback("Проверить", "payment:check")],
@@ -23,11 +24,17 @@ function getPaymentKeyboard(paymentUrl) {
   return keyboard
 }
 
-function generateShopKeyboard() {
-  const items = getItems()
+function paymentItemsInlineKeyboard(ctx) {
+  const items = []
+  if (ctx.state.user.isDeveloper()) {
+    items.push(...shop.devItems)
+  }
+  items.push(...shop.items)
+
+  const buttons = items.map(item => Markup.button.callback(item.title, `payment:new:${item.id}`))
 
   const keyboard = Markup.inlineKeyboard([
-    ...items.map(item => [Markup.button.callback(item.title, `payment:new:${item.id}`)])
+    ...buttons.map(button => [button])
   ])
   return keyboard
 }
@@ -35,6 +42,6 @@ function generateShopKeyboard() {
 module.exports = {
   startKeyboard,
   mainKeyboard,
-  getPaymentKeyboard,
-  generateShopKeyboard,
+  paymentInlineKeyboard,
+  paymentItemsInlineKeyboard,
 }

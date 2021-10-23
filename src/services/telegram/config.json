@@ -1,0 +1,52 @@
+{
+  "quiz": {
+    "playPrice": 75,
+    "successRewardPrice": 150,
+    "voteTimeInSeconds": 10
+  },
+  "promocode": {
+    "bonusAmount": 100,
+    "values": [
+      "VERS146",
+      "CUCUMBER146"
+    ]
+  },
+  "user": {
+    "startBalance": 100
+  },
+  "payments": {
+    "durationInHours": 2,
+    "minWinsInQuiz": 10
+  },
+  "paymentDurationInHours": 2,
+  "shop": {
+    "devItems": [
+      {
+        "id": "devItem",
+        "title": "dev:100💣 — 1 ₽",
+        "amount": 100,
+        "price": 1
+      }
+    ],
+    "items": [
+      {
+        "id": "item50points",
+        "title": "100💣 — 50 ₽",
+        "amount": 100,
+        "price": 50
+      },
+      {
+        "id": "item100points",
+        "title": "220💣 — 100 ₽ (Выгода 10%)",
+        "amount": 220,
+        "price": 100
+      },
+      {
+        "id": "item100points",
+        "title": "625💣 — 250 ₽ (Выгода 25%)",
+        "amount": 625,
+        "price": 250
+      }
+    ]
+  }
+}

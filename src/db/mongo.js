@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const User = require("../models/User")
 
 const { generateQuiz } = require("../utils")
+const config = require("../services/telegram/config.json")
 
 function connect() {
   const uri = process.env.MONGO_URI_DEV
@@ -16,13 +17,15 @@ function close() {
   return mongoose.connection.close()
 }
 
-async function createUser(id, invitedBy) {
+async function createUser(id) {
   const user = new User({
     client: {
       id
     },
-    invitedBy,
-    roles: ["user"]
+    roles: ["user"],
+    payments: {
+      balance: config.user.startBalance
+    }
   })
   await user.save()
 }
