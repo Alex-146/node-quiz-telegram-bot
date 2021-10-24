@@ -7,7 +7,8 @@ const MESSAGES = {
   PLAY: "Играть",
   PROFILE: "Профиль",
   SHOP: "Магазин",
-  WITHDRAW: "Вывод средств"
+  WITHDRAW: "Вывод средств",
+  DEVELOPER_MODE: "Режим разработчика"
 }
 
 module.exports = {

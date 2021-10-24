@@ -15,6 +15,21 @@ function fetchUser(message) {
   }
 }
 
+function developerAccess(message) {
+  return (ctx, next) => {
+    const user = ctx.state.user
+    if (user.isDeveloper()) {
+      next()
+    }
+    else {
+      if (message) {
+        ctx.reply(message)
+      }
+    }
+  }
+}
+
 module.exports = {
-  fetchUser
+  fetchUser,
+  developerAccess
 }

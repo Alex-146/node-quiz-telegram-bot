@@ -18,7 +18,6 @@
     "durationInHours": 2,
     "minWinsInQuiz": 10
   },
-  "paymentDurationInHours": 2,
   "shop": {
     "devItems": [
       {

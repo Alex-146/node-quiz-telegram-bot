@@ -9,11 +9,19 @@ const startKeyboard = Markup.keyboard([
   [MESSAGES.NO]
 ]).oneTime().resize()
 
-const mainKeyboard = Markup.keyboard([
-  [MESSAGES.PROFILE],
-  [MESSAGES.PLAY],
-  [MESSAGES.SHOP, MESSAGES.WITHDRAW],
-]).resize()
+function mainKeyboard(ctx) {
+  const buttons = [
+    [MESSAGES.PROFILE],
+    [MESSAGES.PLAY],
+    [MESSAGES.SHOP, MESSAGES.WITHDRAW],
+  ]
+  const user = ctx.state.user
+  if (user.isDeveloper()) {
+    buttons.push([MESSAGES.DEVELOPER_MODE])
+  }
+  const keyboard = Markup.keyboard(buttons).resize()
+  return keyboard
+}
 
 function paymentInlineKeyboard(paymentUrl) {
   const keyboard = Markup.inlineKeyboard([

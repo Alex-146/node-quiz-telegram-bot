@@ -54,7 +54,7 @@ function promocodeScene() {
 
     if (promocode.values.includes(enteredCode)) {
       await user.activatePromocode(enteredCode)
-      ctx.reply(MESSAGES.PROMOCODE_ACTIVATED, mainKeyboard)
+      ctx.reply(MESSAGES.PROMOCODE_ACTIVATED, mainKeyboard(ctx))
       ctx.scene.leave()
     }
     else {

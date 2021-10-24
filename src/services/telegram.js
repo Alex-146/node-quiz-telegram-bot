@@ -3,10 +3,10 @@ const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { config } = require("../config")
 
 const { getItemById } = require("./telegram/config")
-const { paymentDurationInHours, quiz, promocode, payments } = require("./telegram/config.json")
+const { quiz, promocode, payments } = require("./telegram/config.json")
 
 const { createUser, findUserByChatId } = require("../db/mongo")
-const { fetchUser } = require("./telegram/middleware")
+const { fetchUser, developerAccess } = require("./telegram/middleware")
 const {
   paymentInlineKeyboard,
   paymentItemsInlineKeyboard,
@@ -28,7 +28,8 @@ function createBot() {
       ctx.scene.enter(SCENE_NAMES.START)
     }
     else {
-      ctx.reply("todo: display rules", mainKeyboard)
+      ctx.state.user = candidate
+      ctx.reply("todo: display rules", mainKeyboard(ctx))
     }
   })
 
@@ -53,7 +54,7 @@ function createBot() {
         const poll = await bot.telegram.stopPoll(chatId, message.message_id)
         if (poll.total_voter_count === 0) {
           await user.restoreQuiz()
-          bot.telegram.sendMessage(chatId, "Ты не успел ответить вовремя на этот вопрос, поэтому ты дисквалифицирован! Попробуй начать заново и у тебя всё получится", mainKeyboard)
+          bot.telegram.sendMessage(chatId, "Ты не успел ответить вовремя на этот вопрос, поэтому ты дисквалифицирован! Попробуй начать заново и у тебя всё получится", mainKeyboard(ctx))
         }
         else if (poll.total_voter_count > 1) {
           // может ли пользователь переслать сообщение чтобы проголосовал кто-то другой?
@@ -100,6 +101,7 @@ function createBot() {
 
     const user = await findUserByChatId(userId)
     await user.voteInQuiz(answerIndex)
+    ctx.state.user = user
 
     if (user.isQuizCompleted()) {
       const { correct, total } = user.getQuizScore()
@@ -108,11 +110,11 @@ function createBot() {
         user.payments.balance += quiz.successRewardPrice
         await user.save()
         const text = paragraphMessage(`Твой результат: ${correct}/${total}`, `Начислено ${quiz.successRewardPrice} баллов`, `На счету ${user.payments.balance} баллов`)
-        ctx.telegram.sendMessage(userId, text, mainKeyboard)
+        ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
       }
       else {
         const text = paragraphMessage(`Твой результат: ${correct}/${total}`, `Попробуй еще, у тебя всё получится!`)
-        ctx.telegram.sendMessage(userId, text, mainKeyboard)
+        ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
       }
       await user.restoreQuiz()
     }
@@ -154,12 +156,12 @@ function createBot() {
         amount: item.price,
         currency: "RUB",
         comment: "Оплата товара",
-        expirationDateTime: getLifetimeByHours(paymentDurationInHours),
+        expirationDateTime: getLifetimeByHours(payments.durationInHours),
         customFields: {
           itemId: item.id
         }
       })
-      const text = `Новая оплата: ${item.title}, счет действителен: ${paymentDurationInHours} час(а)`
+      const text = `Новая оплата: ${item.title}, счет действителен: ${payments.durationInHours} час(а)`
       ctx.editMessageText(text, paymentInlineKeyboard(payUrl))
     }
     else {
@@ -238,6 +240,21 @@ function createBot() {
     else {
       ctx.reply("Вывод временно отключен")
     }
+  })
+
+  bot.hears(MESSAGES.DEVELOPER_MODE, fetchUser(), developerAccess(), (ctx) => {
+    ctx.reply("⚙️", Markup.inlineKeyboard([
+      [Markup.button.callback("Добавить 100 баллов", "developer:balance")]
+    ]))
+  })
+
+  bot.action("developer:balance", fetchUser(), developerAccess(), async (ctx) => {
+    const user = ctx.state.user
+    user.payments.balance += 100
+    await user.save()
+    ctx.deleteMessage()
+    ctx.reply(user.payments.balance)
+    ctx.answerCbQuery()
   })
 
   bot.on("text", ctx => {
