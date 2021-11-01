@@ -56,7 +56,7 @@ const schema = new Schema({
       type: String,
       default: "",
     },
-    history: [String],
+    history: [String], // todo: change to payment entry
     promocode: {
       active: {
         type: Boolean,

@@ -1,9 +1,9 @@
 const { Scenes, Markup } = require("telegraf")
+const TelegrafI18n = require("telegraf-i18n")
 
 const { startKeyboard, mainKeyboard } = require("./keyboards")
-const { MESSAGES } = require("./messages")
 const { fetchUser } = require("./middleware")
-const { promocode } = require("./config.json")
+const { getConfig } = require("./config")
 
 const SCENE_NAMES = {
   START: "startScene",
@@ -16,20 +16,23 @@ function startScene() {
   const scene = new Scenes.BaseScene(SCENE_NAMES.START)
   
   scene.enter(async (ctx) => {
-    ctx.reply(MESSAGES.WELCOME, startKeyboard)
+    const text = ctx.i18n.t("greeting")
+    ctx.reply(text, startKeyboard(ctx))
   })
 
-  scene.hears(MESSAGES.YES, (ctx) => {
+  scene.hears(TelegrafI18n.match("keyboard.yes"), (ctx) => {
     ctx.scene.enter(SCENE_NAMES.PROMOCODE)
   })
 
-  scene.hears(MESSAGES.NO, (ctx) => {
-    ctx.reply("Не волнуйся, ты можешь активировать промокод позже")
+  scene.hears(TelegrafI18n.match("keyboard.no"), (ctx) => {
+    const text = ctx.i18n.t("promocode.later")
+    ctx.reply(text)
     ctx.scene.leave()
   })
 
   scene.on("message", (ctx) => {
-    ctx.reply("Пожалуйста ответь на вопрос")
+    const text = ctx.i18n.t("promocode.question")
+    ctx.reply(text)
   })
 
   return scene
@@ -39,12 +42,14 @@ function promocodeScene() {
   const scene = new Scenes.BaseScene(SCENE_NAMES.PROMOCODE)
 
   scene.enter((ctx) => {
-    ctx.reply("Введи промокод")
+    const text = ctx.i18n.t("promocode.enter")
+    ctx.reply(text)
   })
 
-  scene.hears(MESSAGES.RETURN, (ctx) => {
-    // ctx.reply("play", mainKeyboard)
+  scene.hears(TelegrafI18n.match("keyboard.return"), fetchUser(), (ctx) => {
     ctx.scene.leave()
+    const config = getConfig()
+    ctx.reply(ctx.i18n.t("rules", { config }), mainKeyboard(ctx))
   })
 
   scene.on("text", fetchUser(), async (ctx) => {
@@ -52,22 +57,27 @@ function promocodeScene() {
 
     const enteredCode = ctx.message.text
 
+    const { promocode } = getConfig()
+
     if (promocode.values.includes(enteredCode)) {
       await user.activatePromocode(enteredCode)
-      ctx.reply(MESSAGES.PROMOCODE_ACTIVATED, mainKeyboard(ctx))
+      const text = ctx.i18n.t("promocode.activated")
+      ctx.reply(text, mainKeyboard(ctx))
       ctx.scene.leave()
     }
     else {
       const k = Markup.keyboard([
-        [MESSAGES.RETURN]
+        [ctx.i18n.t("keyboard.return")]
       ]).oneTime().resize()
 
-      ctx.reply("Недействительный промокод, попробуй еще или вернись в главное меню", k)
+      const text = ctx.i18n.t("promocode.invalid")
+      ctx.reply(text, k)
     }
   })
   
   scene.on("message", (ctx) => {
-    ctx.reply("Это не промокод!")
+    const text = ctx.i18n.t("promocode.unrecognized")
+    ctx.reply(text)
   })
 
   return scene

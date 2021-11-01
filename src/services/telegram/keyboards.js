@@ -1,38 +1,39 @@
 const { Markup } = require("telegraf")
 
-const { MESSAGES } = require("./messages")
+const { getConfig } = require("./config")
 
-const { shop } = require("./config.json")
-
-const startKeyboard = Markup.keyboard([
-  [MESSAGES.YES],
-  [MESSAGES.NO]
-]).oneTime().resize()
+function startKeyboard(ctx) {
+  return Markup.keyboard([
+    [ctx.i18n.t("keyboard.yes")],
+    [ctx.i18n.t("keyboard.no")]
+  ]).oneTime().resize()
+}
 
 function mainKeyboard(ctx) {
   const buttons = [
-    [MESSAGES.PROFILE],
-    [MESSAGES.PLAY],
-    [MESSAGES.SHOP, MESSAGES.WITHDRAW],
+    [ctx.i18n.t("keyboard.profile")],
+    [ctx.i18n.t("keyboard.play")],
+    [ctx.i18n.t("keyboard.shop"), ctx.i18n.t("keyboard.withdraw")],
   ]
   const user = ctx.state.user
   if (user.isDeveloper()) {
-    buttons.push([MESSAGES.DEVELOPER_MODE])
+    buttons.push([ctx.i18n.t("keyboard.developer")])
   }
   const keyboard = Markup.keyboard(buttons).resize()
   return keyboard
 }
 
-function paymentInlineKeyboard(paymentUrl) {
+function paymentInlineKeyboard(i18n, paymentUrl) {
   const keyboard = Markup.inlineKeyboard([
-    [Markup.button.url("Оплатить", paymentUrl)],
-    [Markup.button.callback("Проверить", "payment:check")],
-    [Markup.button.callback("Отказаться", "payment:cancel")],
+    [Markup.button.url(i18n.t("payments.keyboard.pay"), paymentUrl)],
+    [Markup.button.callback(i18n.t("payments.keyboard.check"), "payment:check")],
+    [Markup.button.callback(i18n.t("payments.keyboard.reject"), "payment:cancel")],
   ])
   return keyboard
 }
 
 function paymentItemsInlineKeyboard(ctx) {
+  const { shop } = getConfig()
   const items = []
   if (ctx.state.user.isDeveloper()) {
     items.push(...shop.devItems)
