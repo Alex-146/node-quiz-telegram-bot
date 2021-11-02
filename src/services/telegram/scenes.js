@@ -26,7 +26,7 @@ function startScene() {
 
   scene.hears(TelegrafI18n.match("keyboard.no"), (ctx) => {
     const text = ctx.i18n.t("promocode.later")
-    ctx.reply(text)
+    ctx.reply(text, mainKeyboard(ctx))
     ctx.scene.leave()
   })
 

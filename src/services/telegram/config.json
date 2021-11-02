@@ -2,7 +2,8 @@
   "quiz": {
     "playPrice": 75,
     "successRewardPrice": 150,
-    "voteTimeInSeconds": 10
+    "voteTimeInSeconds": 10,
+    "amountOfQuestions": 5
   },
   "promocode": {
     "bonusAmount": 100,

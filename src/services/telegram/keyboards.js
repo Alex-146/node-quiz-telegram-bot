@@ -16,7 +16,7 @@ function mainKeyboard(ctx) {
     [ctx.i18n.t("keyboard.shop"), ctx.i18n.t("keyboard.withdraw")],
   ]
   const user = ctx.state.user
-  if (user.isDeveloper()) {
+  if (user && user.isDeveloper()) {
     buttons.push([ctx.i18n.t("keyboard.developer")])
   }
   const keyboard = Markup.keyboard(buttons).resize()

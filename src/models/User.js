@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose")
 
 const payments = require("../services/qiwi")
+const { shuffle, generateQuiz } = require("../utils")
 
 const schema = new Schema({
   client: {
@@ -70,15 +71,42 @@ const schema = new Schema({
   },
 })
 
-schema.methods.generateQuiz = function() {
-  const shuffled = require("../utils").generateQuiz()
+schema.methods.generateQuiz = function(amount) {
+  // const pathToQuestions = "../data/quiz.json" 
+  const pathToQuestions = "../data/200-work.json"
+  const allQuestions = require(pathToQuestions)
+
+  // получить все вопросы викторин у которых проголосовал пользователь
+  const used = this.quiz.history.map(entry => entry.questions.filter(q => q.answerIndex !== -1).map(q => q.text)).flat()
+
+  // получить все вопросы с общего списка который будут новыми для пользователя
+  const unused = allQuestions.filter(q => !used.includes(q.text)).map(({ text, answers, correctIndex }) => ({ text, answers, correctIndex }))
+
+  const quiz = {
+    index: 0,
+    questions: [],
+  }
+  
+  if (unused.length < amount) {
+    // новых вопросов доступно меньше чем нужно
+    quiz.questions = generateQuiz(unused)
+  }
+  else {
+    // todo: сейчас следующие вопросы идут в такой же очереди как в БД только между собой перемешаны
+    quiz.questions = generateQuiz(unused.slice(0, amount))
+  }
+
+  this.quiz.current = quiz
+}
+
+schema.methods.generateQuizTemp = function() {
+  const quizArray = require("../data/quiz.json")
+  const shuffled = generateQuiz(quizArray)
 
   this.quiz.current = {
     index: 0,
     questions: shuffled,
   }
-
-  return this.save()
 }
 
 schema.methods.getCurrentQuestion = function() {

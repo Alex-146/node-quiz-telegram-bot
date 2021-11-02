@@ -1,0 +1,2602 @@
+[
+  {
+    "question": "What was Mohammad Ali`s birth name?",
+    "answer": "Cassius Clay",
+    "text": "Как звали Мухаммеда Али при рождении?",
+    "answers": [
+      "Кассиус Клей",
+      "Бен Ладен",
+      "Майкл Джордан",
+      "Рокки Бальбоа",
+      "Джеки Чан"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many dots are there in total on a pair of dice?",
+    "answer": "42",
+    "text": "Сколько всего точек на паре игральных костей?",
+    "answers": [
+      "42",
+      "21",
+      "46",
+      "50",
+      "54"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who wrote the book The Hound Of The Baskervilles?",
+    "answer": "Sir Arthur Conan Doyle",
+    "text": "Кто написал книгу «Собака Баскервилей»?",
+    "answers": [
+      "Артур Конан Дойл",
+      "Марк Твен",
+      "Александр Пушкин",
+      "Николай Гоголь",
+      "Эдгар Аллан По"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many wives did Henry VIII have?",
+    "answer": "6",
+    "text": "Сколько жен было у Генриха VIII?",
+    "answers": [
+      "6",
+      "5",
+      "0",
+      "1",
+      "2"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In a game of chess, what is the only piece able to jump over other pieces?",
+    "answer": "Knight",
+    "text": "Какая единственная фигура в шахматной игре может перепрыгивать через другие фигуры?",
+    "answers": [
+      "Конь",
+      "Пешка",
+      "Слон",
+      "Ладья",
+      "Ферзь"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the square root of 169?",
+    "answer": "13",
+    "text": "Чему равен квадратный корень из 169?",
+    "answers": [
+      "13",
+      "25",
+      "96",
+      "169",
+      "50"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many events are there in a decathlon?",
+    "answer": "10",
+    "text": "Сколько всего соревнований в десятиборье?",
+    "answers": [
+      "10",
+      "100",
+      "5",
+      "20",
+      "25"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "According to the old proverb all roads lead to which capital city?",
+    "answer": "Rome",
+    "text": "Согласно старой пословице, в какую столицу ведут все дороги?",
+    "answers": [
+      "Рим",
+      "Польшу",
+      "Италию",
+      "Украину",
+      "Россию"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What gas do all fuels need in order to burn?",
+    "answer": "Oxygen",
+    "text": "Какой газ нужен всем видам топлива для сжигания?",
+    "answers": [
+      "Кислород",
+      "Азот",
+      "Аммиак",
+      "Бутан",
+      "Озон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the name of the clockwork device used by musicians to measure time?",
+    "answer": "Metronome",
+    "text": "Как называется часовой механизм, которым музыканты измеряют время?",
+    "answers": [
+      "Метроном",
+      "Обычные часы",
+      "Часы с кукушкой",
+      "Apple Watch",
+      "Песочные часы"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the furthest planet from the sun?",
+    "answer": "Pluto",
+    "text": "Какая планета дальше всего от Солнца?",
+    "answers": [
+      "Плутон",
+      "Марс",
+      "Меркурий",
+      "Уран",
+      "Сатурн"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the chemical symbo for Hydrogen?",
+    "answer": "H",
+    "text": "Какой химический символ у водорода?",
+    "answers": [
+      "H",
+      "W",
+      "He",
+      "F",
+      "Fe"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many strings are on a violin?",
+    "answer": "4",
+    "text": "Сколько струн на скрипке?",
+    "answers": [
+      "4",
+      "5",
+      "3",
+      "10",
+      "6"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which famous film would first have come across the character of Dorothy Gale?",
+    "answer": "The Wizard Of Oz",
+    "text": "В каком известном фильме впервые встретится персонаж Дороти Гейл?",
+    "answers": [
+      "Волшебник страны Оз",
+      "Гарри Поттер",
+      "Форест Гамп",
+      "Побег из Шоушенка",
+      "Приключения Тома Сойера"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which animal is associated with the beginning of an MGM film?",
+    "answer": "A lion",
+    "text": "С каким животным связано начало фильмов MGM?",
+    "answers": [
+      "Лев",
+      "Зебра",
+      "Пингвин",
+      "Кот",
+      "Собака"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who is the animated star of the computer game Tomb Raider?",
+    "answer": "Lara Croft",
+    "text": "Кто является анимационной звездой компьютерной игры Tomb Raider?",
+    "answers": [
+      "Лара Крофт",
+      "Анджелина Джоли",
+      "Черная вдова",
+      "Клеопатра",
+      "Харли Квинн"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Greek legend, who turned everything he touched into gold?",
+    "answer": "Midas",
+    "text": "Кто в греческой легенде превращал все, к чему прикасался, в золото?",
+    "answers": [
+      "Мидас",
+      "Зевс",
+      "Арес",
+      "Юлий Цезарь",
+      "Прометей"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What vegetable is the national emblem of Wales?",
+    "answer": "The leek",
+    "text": "Какой овощ является национальной эмблемой Уэльса?",
+    "answers": [
+      "Лук-порей",
+      "Огурец",
+      "Яблоко",
+      "Клубника",
+      "Арбуз"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many legs does an insect have?",
+    "answer": "Six",
+    "text": "Сколько ног у насекомого?",
+    "answers": [
+      "6",
+      "12",
+      "4",
+      "8",
+      "10"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the name of the city in which The Simpsons live?",
+    "answer": "Springfield",
+    "text": "Как называется город, в котором живут Симпсоны?",
+    "answers": [
+      "Спрингфилд",
+      "Нью-Йорк",
+      "Вашингтон",
+      "Либерти-Сити",
+      "Сайлент-Хилл"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What word is used to describe a group of ants?",
+    "answer": "Colony",
+    "text": "Какое слово используется чтобы описать группу муравьев?",
+    "answers": [
+      "Колония",
+      "Группа",
+      "Отряд",
+      "Армия",
+      "Войско"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who starred in the film `Enter The Dragon`?",
+    "answer": "Bruce Lee",
+    "text": "Кто снялся в фильме «Выход Дракона» ?",
+    "answers": [
+      "Брюс Ли",
+      "Джет Ли",
+      "Джеки Чан",
+      "Арнольд Шварценеггер",
+      "Сильвестр Сталлоне"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "If you were riding in a Gondola which city are you most likely to be in?",
+    "answer": "Venice",
+    "text": "Если бы вы ехали в гондоле, в каком городе вы бы, скорее всего, оказались?",
+    "answers": [
+      "Венеция",
+      "Винница",
+      "Вашингтон",
+      "Варшава",
+      "Токио"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following flags does not feature the colour blue? Greece, Uruguay or Japan?",
+    "answer": "Japan",
+    "text": "Какой из следующих флагов не имеет синего цвета?",
+    "answers": [
+      "Япония",
+      "Греция",
+      "Уругвай",
+      "Украина",
+      "Россия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the colour of the dragon on the Welsh flag?",
+    "answer": "Red",
+    "text": "Какого цвета дракон на валлийском флаге?",
+    "answers": [
+      "Красного",
+      "Белого",
+      "Зеленого",
+      "Желтого",
+      "На флаге нету дракона"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many arms does a starfish usually have?",
+    "answer": "5",
+    "text": "Сколько рук обычно бывает у морской звезды?",
+    "answers": [
+      "5",
+      "6",
+      "10",
+      "3",
+      "4"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following countries is not in Europe? Luxembourg, Austria or Morocco?",
+    "answer": "Morocco",
+    "text": "Какая из следующих стран не входит в Европу?",
+    "answers": [
+      "Марокко",
+      "Люксембург",
+      "Австрия",
+      "Украина",
+      "Кипр"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the tallest mammal?",
+    "answer": "The giraffe",
+    "text": "Какое млекопитающее самое высокое?",
+    "answers": [
+      "Жираф",
+      "Зебра",
+      "Лев",
+      "Пингвин",
+      "Кенгуру"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What was the first animal to be sent into space?",
+    "answer": "A dog",
+    "text": "Какое животное первым отправили в космос?",
+    "answers": [
+      "Собака",
+      "Кот",
+      "Мышь",
+      "Коала",
+      "Тигр"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who invented the telephone?",
+    "answer": "Alexander Graham Bell",
+    "text": "Кто изобрел телефон?",
+    "answers": [
+      "Александр Грейам Белл",
+      "Дуглас Энгельбарт",
+      "Стив Джобс",
+      "Николай Тесла",
+      "Томас Эдисон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What continent is sometimes known as the `Dark Continent`?",
+    "answer": "Africa",
+    "text": "Какой контитент иногда называют `Темный Континент`",
+    "answers": [
+      "Африка",
+      "Куба",
+      "Бразилия",
+      "Мексика",
+      "Азия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour is the circle on the Japanese flag?",
+    "answer": "Red",
+    "text": "Какого цвета имеет круг на японском флаге?",
+    "answers": [
+      "Красный",
+      "Белый",
+      "Синий",
+      "Оранжевый",
+      "На флаге нету круга"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the normal colour of the gem sapphire? Red, Green or Blue?",
+    "answer": "Blue",
+    "text": "Какой цвет у драгоценного сапфира",
+    "answers": [
+      "Синий",
+      "Красный",
+      "Зеленый",
+      "Белый",
+      "Оранжевый"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many years are there in a millennium?",
+    "answer": "1000",
+    "text": "Сколько лет в миллениуме",
+    "answers": [
+      "1000",
+      "100",
+      "500",
+      "10",
+      "200"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which Shakespeare play does the line `To be or not to be, that is the question` appear?",
+    "answer": "Hamlet",
+    "text": "В какой пьесе Шекспира встречается строчка «Быть ​​или не быть, вот в чем вопрос»?",
+    "answers": [
+      "Гамлет",
+      "Ромео и Джульетта",
+      "Комедия Ошибок",
+      "Перикл",
+      "Сон в летнюю ночь"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following flags does not feature the colour blue? Brazil, Germany or France",
+    "answer": "Germany",
+    "text": "Какой из следующих флагов не имеет синего цвета?",
+    "answers": [
+      "Германия",
+      "Бразилия",
+      "Франция",
+      "Украина",
+      "Россия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "After how many years of marriage is a gold wedding anniversary celebrated?",
+    "answer": "50",
+    "text": "Через сколько лет совместной жизни отмечается годовщина золотой свадьбы?",
+    "answers": [
+      "50",
+      "100",
+      "75",
+      "25",
+      "10"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following countries is not in Africa? Ecuador, Sudan or Egypt?",
+    "answer": "Ecuador",
+    "text": "Какая из следующих стран не входит в состав Африки?",
+    "answers": [
+      "Эквадор",
+      "Судан",
+      "Египет",
+      "Эфиопия",
+      "Гвинея"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the name of the poker hand containing three of a kind and a pair?",
+    "answer": "Full house",
+    "text": "Как называется покерная комбинация, в которой есть тройка и пара?",
+    "answers": [
+      "Фул-хаус",
+      "Каре",
+      "Флеш-рояль",
+      "Стрит",
+      "Стрит-флеш"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the most common letter used in the English language?",
+    "answer": "`E`",
+    "text": "Какая буква чаще всего используется в английском языке?",
+    "answers": [
+      "E",
+      "A",
+      "I",
+      "O",
+      "Y"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour spots does a common ladybird have?",
+    "answer": "Black",
+    "text": "Какого цвета имеют пятна есть у обычной божьей коровки?",
+    "answers": [
+      "Черный",
+      "Белый",
+      "Красный",
+      "Желтый",
+      "Божья коровка не имеет пятен"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which cartoon show included characters called Thelma and Shaggy?",
+    "answer": "Scooby Doo",
+    "text": "В каком мультсериале участвовали персонажи по имени Тельма и Шэгги?",
+    "answers": [
+      "Скуби Ду",
+      "Симпсоны",
+      "Футурама",
+      "Флинстоуны",
+      "Рик и Морти"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which American city might you see a Broadway show?",
+    "answer": "New York",
+    "text": "В каком американском городе вы можете посмотреть бродвейское шоу?",
+    "answers": [
+      "Нью-Йорк",
+      "Чикаго",
+      "Лос-Анджелес",
+      "Атланта",
+      "Бродвей"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What does a kleptomaniac compulsively do?",
+    "answer": "Steal things",
+    "text": "Что делает клептоман навязчиво?",
+    "answers": [
+      "Ворует вещи",
+      "Ходит во сне",
+      "Забывает о вещах",
+      "Боится пауков",
+      "Не может уснуть"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which American city are Madison Square Gardens?",
+    "answer": "New York",
+    "text": "В каком американском городе находятся сады Мэдисон-сквер?",
+    "answers": [
+      "Нью-Йорк",
+      "Чикаго",
+      "Бостон",
+      "Лос-Анджелес",
+      "Вашингтон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which canal joins the Red Sea and the Mediterranean?",
+    "answer": "The Suez Canal",
+    "text": "Какой канал соединяет Красное море и Средиземное море?",
+    "answers": [
+      "Суэцкий канал",
+      "Панамский канал",
+      "Беломоро-Балтийский канал",
+      "Великий китайский канал",
+      "Никакой"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What name is given to the fear of spiders?",
+    "answer": "Arachnophobia",
+    "text": "Как называется боязнь пауков?",
+    "answers": [
+      "Арахнофобия",
+      "Клептомания",
+      "Пиробофия",
+      "Макрофобия",
+      "Микрофобия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the largest desert in the world?",
+    "answer": "Sahara",
+    "text": "Какая самая большая пустыня в мире?",
+    "answers": [
+      "Сахара",
+      "Мохаве",
+      "Калахари",
+      "Каракумы",
+      "Симпсон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Where are the British Crown Jewels kept?",
+    "answer": "The Tower Of London",
+    "text": "Где хранятся драгоценности британской короны?",
+    "answers": [
+      "Лондонский Тауэр",
+      "Лувр",
+      "Эрмитаж",
+      "Кремль",
+      "Британский музей"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Greek mythology, what was Medusa`s hair made of?",
+    "answer": "Snakes",
+    "text": "Из чего в греческой мифологии были сделаны волосы Медузы?",
+    "answers": [
+      "Змеи",
+      "Ткань",
+      "Растения",
+      "Огонь",
+      "Она не имела волос"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the first letter of the Greek alphabet?",
+    "answer": "Alpha",
+    "text": "Какая первая буква греческого алфавита?",
+    "answers": [
+      "Альфа",
+      "Омега",
+      "Лямбда",
+      "Сигма",
+      "Эпсилон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "After how many years of marriage would you celebrate a silver wedding anniversary?",
+    "answer": "25",
+    "text": "Через сколько лет совместной жизни отмечается серебрянная годовщина свадьбы?",
+    "answers": [
+      "25",
+      "50",
+      "100",
+      "10",
+      "1"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which band released the album `Dark Side of the Moon`?",
+    "answer": "Pink Floyd",
+    "text": "Какая группа выпустила альбом «Dark Side of the Moon»?",
+    "answers": [
+      "Pink Floyd",
+      "Linkin Park",
+      "Three Days Grace",
+      "Hollywood Undead",
+      "Twenry One Pilots"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following colours appears on the French flag? White, Black or Yellow?",
+    "answer": "White",
+    "text": "Какой из следующих цветов изображен на французском флаге?",
+    "answers": [
+      "Белый",
+      "Черный",
+      "Желтый",
+      "Голубой",
+      "Зеленый"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What type of animal was Stuart, in the 1999 film `Stuart Little`?",
+    "answer": "Mouse",
+    "text": "Каким животным был Стюарт в фильме 1999 года «Стюарт Литтл»?",
+    "answers": [
+      "Мышь",
+      "Человек",
+      "Кот",
+      "Собака",
+      "Пингвин"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What creature appears on the flag of Wales?",
+    "answer": "A dragon",
+    "text": "Какое существо изображено на флаге Уэльса?",
+    "answers": [
+      "Дракон",
+      "Пингвин",
+      "Кот",
+      "Лев",
+      "На флаге нету животных"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "First published in 1904, for which book is J. M. Barrie best known?",
+    "answer": "`Peter Pan`",
+    "text": "Какая книга впервые была опубликована в 1904 году, которая прославила Д.Ж.Барри?",
+    "answers": [
+      "Питен Пен",
+      "Приключения Тома Сойера",
+      "Гарри Поттер",
+      "Шерлок Холмс",
+      "Д.Ж.Барри не был писателем"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the bestselling book in the world?",
+    "answer": "The Bible",
+    "text": "Какая книга самая продаваемая в мире?",
+    "answers": [
+      "Библия",
+      "50 оттенов серого",
+      "Гарри Поттер",
+      "Властелин Колец",
+      "Дюна"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Carbon, Oxygen and which other element makes up carbohydrates?",
+    "answer": "Hydrogen",
+    "text": "Углерод, кислород и какой еще элемент составляют газовые гидраты?",
+    "answers": [
+      "Водород",
+      "Оксиген",
+      "Азот",
+      "Нитроген",
+      "Карбон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "On what part of the body would you wear a `sombrero`?",
+    "answer": "The head",
+    "text": "На какой части тела вы бы носили «сомбреро»?",
+    "answers": [
+      "На голове",
+      "На спине",
+      "На ногах",
+      "На груди",
+      "Это не одежда"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which cartoon character was featured in the short film `Steamboat Willie`?",
+    "answer": "Mickey Mouse",
+    "text": "Какой мультипликационный персонаж был показан в короткометражном фильме «Пароходик Вилли»?",
+    "answers": [
+      "Микки Маус",
+      "Винни Пух",
+      "Барт Симпсон",
+      "Бендер",
+      "Гарри Поттер"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which chemical element can take the form of diamond or graphite?",
+    "answer": "Carbon",
+    "text": "Какой химический элемент может принимать форму алмаза или графита?",
+    "answers": [
+      "Карбон",
+      "Оксиген",
+      "Кислород",
+      "Натрий",
+      "Нитроген"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following colours appears on the flag of Italy? Green, Blue or Yellow?",
+    "answer": "Green",
+    "text": "Какой из следующих цветов изображен на флаге Италии?",
+    "answers": [
+      "Зеленый",
+      "Синий",
+      "Желтый",
+      "Оранжевый",
+      "Черный"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which element has the chemical symbol `N`?",
+    "answer": "Nitrogen",
+    "text": "Какой элемент имеет химический символ «N»?",
+    "answers": [
+      "Азот",
+      "Углерод",
+      "Натрий",
+      "Никель",
+      "Неон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the first book of the Bible?",
+    "answer": "Genesis",
+    "text": "Какая первая книга Библии?",
+    "answers": [
+      "Происхождение",
+      "Восстание",
+      "Начало",
+      "Возмездие",
+      "Падение"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many sides does a dodecahedron have?",
+    "answer": "12",
+    "text": "Сколько сторон у додекаэдра?",
+    "answers": [
+      "12",
+      "10",
+      "9",
+      "8",
+      "15"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which country is sometimes known as the Emerald Isle?",
+    "answer": "Ireland",
+    "text": "Какую страну иногда называют Изумрудным островом?",
+    "answers": [
+      "Ирландия",
+      "Кипр",
+      "Австралия",
+      "Куба",
+      "Мадагаскар"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the largest country in the world?",
+    "answer": "Russia",
+    "text": "Какая страна самая большая в мире?",
+    "answers": [
+      "Россия",
+      "Китай",
+      "США",
+      "Африка",
+      "Антарктида"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What type of animal was Bambi`s friend, Thumper?",
+    "answer": "A rabbit.",
+    "text": "Какое животное было другом Бэмби, Тампер?",
+    "answers": [
+      "Кролик",
+      "Сова",
+      "Тигр",
+      "Собака",
+      "Белка"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The city of Cairo stands on which famous river?",
+    "answer": "Nile",
+    "text": "На какой знаменитой реке стоит Каир?",
+    "answers": [
+      "Нил",
+      "Амазонка",
+      "Миссисипи",
+      "Замбези",
+      "Парагвай"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What animal is known as the ship of the desert?",
+    "answer": "The camel",
+    "text": "Какое животное известно как корабль пустыни?",
+    "answers": [
+      "Верблюд",
+      "Чайка",
+      "Крокодил",
+      "Павлин",
+      "Лев"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What chess piece does not move in a straight line?",
+    "answer": "Knight",
+    "text": "Какая шахматная фигура не движется по прямой?",
+    "answers": [
+      "Конь",
+      "Ферзь",
+      "Король",
+      "Ладья",
+      "Пешка"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which US President was forced to resign because of the Watergate scandal?",
+    "answer": "Richard Nixon",
+    "text": "Какой президент США был вынужден уйти в отставку из-за Уотергейтского скандала?",
+    "answers": [
+      "Ричард Никсон",
+      "Барак Обама",
+      "Дональд Трамп",
+      "Стив Хокинг",
+      "Жан Фреско"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In music, which superstar was jailed in Tokyo in 1980 for drugs possession?",
+    "answer": "Paul McCartney",
+    "text": "В музыке какая суперзвезда была заключена в тюрьму в Токио в 1980 году за хранение наркотиков?",
+    "answers": [
+      "Пол Маккартни",
+      "Честер Беннингтон",
+      "Рианна",
+      "Мадонна",
+      "Майкл Джексон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the highest mountain in Great Britain?",
+    "answer": "Ben Nevis",
+    "text": "Какая самая высокая гора в Великобритании?",
+    "answers": [
+      "Бен-Невис",
+      "Аляска",
+      "Эверест",
+      "Сноудон",
+      "Горы отсутствуют"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Gorgonzola cheese comes from which country?",
+    "answer": "Italy",
+    "text": "Сыр горгонзола родом из какой страны?",
+    "answers": [
+      "Италия",
+      "Швеция",
+      "Австралия",
+      "Шотландия",
+      "Германия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "A Sphinx has the body of which animal?",
+    "answer": "Lion",
+    "text": "У Сфинкса есть тело какого животного?",
+    "answers": [
+      "Лев",
+      "Кот",
+      "Кролик",
+      "Павлин",
+      "Собака"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Great Britain declared war on Germany after they invaded which country in 1939?",
+    "answer": "Poland",
+    "text": "Великобритания объявила войну Германии после того, как они вторглись в какую страну в 1939 году?",
+    "answers": [
+      "Польша",
+      "СССР",
+      "Россия",
+      "Китай",
+      "Япония"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Whose last words were `Et tu, Brute`?",
+    "answer": "Julius Caesar`s",
+    "text": "Чьи последние слова были: И ты, Брут?",
+    "answers": [
+      "Юлий Цезарь",
+      "Гомер Симпсон",
+      "Пол Уокер",
+      "Прометей",
+      "Стивен Хокинг"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Excluding jokers, how many playing cards are there in a standard pack?",
+    "answer": "52",
+    "text": "Сколько игральных карт в стандартной колоде без учета джокеров?",
+    "answers": [
+      "52",
+      "54",
+      "36",
+      "48",
+      "34"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following colours does not appear on the Irish flag? White, Yellow or Orange?",
+    "answer": "Yellow",
+    "text": "Какой из следующих цветов не отображается на ирландском флаге?",
+    "answers": [
+      "Желтый",
+      "Белый",
+      "Оранжевый",
+      "Зеленый",
+      "Красный"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour is an emerald?",
+    "answer": "Green",
+    "text": "Какого цвета изумруд?",
+    "answers": [
+      "Зеленый",
+      "Синий",
+      "Белый",
+      "Красный",
+      "Фиолетовый"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the average of the numbers 1, 2, 4 and 5?",
+    "answer": "3",
+    "text": "Какое среднее значение у чисел 1, 2, 4 и 5?",
+    "answers": [
+      "3",
+      "4",
+      "5",
+      "0",
+      "12"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What film was advertised with the slogan `an adventure 65 million years in the making`?",
+    "answer": "`Jurassic Park`",
+    "text": "Какой фильм рекламировался под слоганом «Приключение, которое создавалось 65 миллионов лет назад»?",
+    "answers": [
+      "Парк Юрского периода",
+      "Терминатор",
+      "Властелин Колец",
+      "Гарри Поттер",
+      "Путешествие к центру Земли"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the distinguishing feature of a Manx cat?",
+    "answer": "It has no tail",
+    "text": "В чем отличительная черта мэнской кошки?",
+    "answers": [
+      "Отсутствие хвоста",
+      "Короткие лапки",
+      "Отсутствие шерсти",
+      "Яркий цвет",
+      "Долгий язык"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the chemical symbol for the element Oxygen?",
+    "answer": "O",
+    "text": "Каков химический символ элемента кислород?",
+    "answers": [
+      "О",
+      "K",
+      "Ar",
+      "C",
+      "Ca"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The sale of which drink accounts for 10% of the income of the government in Russia?",
+    "answer": "Vodka",
+    "text": "Продажа какого напитка составляет 10% доходов государства в России?",
+    "answers": [
+      "Водка",
+      "Квас",
+      "Лимонад",
+      "Пиво",
+      "Шампанское"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which Shakespeare play inspired the musical `West Side Story`?",
+    "answer": "`Romeo And Juliet`",
+    "text": "Какая пьеса Шекспира вдохновила на создание мюзикла «Вестсайдская история»?",
+    "answers": [
+      "Ромео и Джульетта",
+      "Гамлет",
+      "Сон в летнюю ночь",
+      "Двенадцатая ночь",
+      "Макбет"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which 1977 film was introduced by the words, `A long time ago in a galaxy far away...`?",
+    "answer": "`Star Wars`",
+    "text": "Какой фильм 1977 года был начат словами: «Давным-давно в далекой галактике...»",
+    "answers": [
+      "Звездные войны",
+      "Терминатор",
+      "Робокоп",
+      "Пятый элемент",
+      "Леон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which city is known as the `Eternal City`?",
+    "answer": "Rome",
+    "text": "Какой город известен как «Вечный город»",
+    "answers": [
+      "Рим",
+      "Москва",
+      "Санкт-Петербург",
+      "Милан",
+      "Гамбург"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many strings are there on a normal a bass guitar?",
+    "answer": "4",
+    "text": "Сколько струн на обычной бас-гитаре?",
+    "answers": [
+      "4",
+      "5",
+      "10",
+      "3",
+      "6"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many holes does a 10-pin bowling ball have in it?",
+    "answer": "Three",
+    "text": "Сколько отверстий в шаре для боулинга с 10 кеглями?",
+    "answers": [
+      "3",
+      "1",
+      "2",
+      "4",
+      "5"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which town did Jesus grow up?",
+    "answer": "Nazareth",
+    "text": "В каком городе вырос Иисус?",
+    "answers": [
+      "Назарет",
+      "Милан",
+      "Неаполь",
+      "Рим",
+      "Норфолк"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "If a month has a Friday the thirteenth then on what day of the week would that month begin?",
+    "answer": "Sunday",
+    "text": "Если в месяце пятница тринадцатого числа, то с какого дня недели этот месяц начнется?",
+    "answers": [
+      "Воскресенье",
+      "Понедельник",
+      "Суббота",
+      "Вторник",
+      "Среда"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the capital of Northern Ireland?",
+    "answer": "Belfast",
+    "text": "Какая столица Северной Ирландии?",
+    "answers": [
+      "Белфаст",
+      "Лондон",
+      "Стокгольм",
+      "Дублин",
+      "Хельсинки"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the national emblem that appears on the Canadian flag?",
+    "answer": "The maple leaf",
+    "text": "Какая национальная эмблема изображена на канадском флаге?",
+    "answers": [
+      "Кленовый лист",
+      "Булава",
+      "Звезда",
+      "Круг",
+      "Герб"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "answer": "Leonardo Da Vinci",
+    "text": "Кто нарисовал Мону Лизу?",
+    "answers": [
+      "Леонардо да Винчи",
+      "Леонардо Ди Каприо",
+      "Лионель Месси",
+      "Винсент ван Гог",
+      "Казимир Малевич"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who wrote `Jungle Book`?",
+    "answer": "Rudyard Kipling",
+    "text": "Кто написал «Книгу джунглей»?",
+    "answers": [
+      "Редьярд Киплинг",
+      "Джон Киплинг",
+      "Роберт Льюис Стивенсон",
+      "Александр Пушкин",
+      "Тарас Шевченко"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Roman numerals, what is CC?",
+    "answer": "200",
+    "text": "Что такое CC в римских цифрах?",
+    "answers": [
+      "200",
+      "100",
+      "50",
+      "500",
+      "2000"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who in 1961 made the first space flight?",
+    "answer": "Yuri Gagarin",
+    "text": "Кто в 1961 году совершил первый полет в космос?",
+    "answers": [
+      "Юрий Гагарин",
+      "Белка и Стрелка",
+      "Зигмунд Фрейд",
+      "Шимпанзе Хэм",
+      "Нил Армстронг"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the northernmost American state?",
+    "answer": "Alaska",
+    "text": "Какой самый северный штат Америки?",
+    "answers": [
+      "Аляска",
+      "Канада",
+      "Северная Дакота",
+      "Техас",
+      "Флорида"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In mythology, who supported the heavens on his shoulders?",
+    "answer": "Atlas",
+    "text": "Кто в мифологии поддерживал небеса на своих плечах?",
+    "answers": [
+      "Атлас",
+      "Зевс",
+      "Прометей",
+      "Аполлон",
+      "Посейдон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which country was the recent `Lord Of The Rings` movie filmed?",
+    "answer": "New Zealand",
+    "text": "В какой стране снимался недавний фильм «Властелин колец»?",
+    "answers": [
+      "Новая Зеландия",
+      "Австралия",
+      "США",
+      "Бразилия",
+      "Швеция"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which is the only planet in our Solar System that is not named after either a Greek or Roman God?",
+    "answer": "Earth",
+    "text": "Какая единственная планета в нашей Солнечной системе не названа в честь греческого или римского бога?",
+    "answers": [
+      "Земля",
+      "Венера",
+      "Марс",
+      "Плутон",
+      "Уран"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The binary system of numbers uses which two numerical digits?",
+    "answer": "1 and 0",
+    "text": "Какие две цифры используются в двоичной системе чисел?",
+    "answers": [
+      "0 и 1",
+      "4 и 8",
+      "1 и 2",
+      "0 и 2",
+      "2 и 4"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who wrote the book `A Brief History Of Time`?",
+    "answer": "Stephen Hawking",
+    "text": "Кто написал книгу «Краткая история времени»?",
+    "answers": [
+      "Стивен Хокинг",
+      "Жак Фреско",
+      "Александр Пушкин",
+      "Стивен Кинг",
+      "Джоан Роулинг"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which country was the first ever golf course?",
+    "answer": "Scotland",
+    "text": "В какой стране было первое поле для гольфа?",
+    "answers": [
+      "Шотландия",
+      "Россия",
+      "Швеция",
+      "Германия",
+      "Новая Зеландия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What was the President of the USA between 1981 and 1989?",
+    "answer": "Ronald Reagan",
+    "text": "Кем был президент США с 1981 по 1989 год?",
+    "answers": [
+      "Рональд Рейган",
+      "Барак Обама",
+      "Дональд Трамп",
+      "Джон Кеннеди",
+      "Джордж Вашингтон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many prime numbers are there between 10 and 20?",
+    "answer": "Four (11, 13, 17 and 19)",
+    "text": "Сколько простых чисел от 10 до 20?",
+    "answers": [
+      "4",
+      "10",
+      "5",
+      "1",
+      "2"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the highest number on a roulette wheel?",
+    "answer": "36",
+    "text": "Какое наибольшее число на колесе рулетки?",
+    "answers": [
+      "36",
+      "14",
+      "69",
+      "70",
+      "100"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What number do the two numbers on the opposite side of dice always add up to?",
+    "answer": "7",
+    "text": "К какому числу всегда складываются два числа на противоположной стороне игральных костей?",
+    "answers": [
+      "7",
+      "6",
+      "10",
+      "5",
+      "1"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many eyes does a cyclops have?",
+    "answer": "1",
+    "text": "Сколько глаз у циклопа?",
+    "answers": [
+      "1",
+      "0",
+      "2",
+      "4",
+      "6"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who wrote `Frankenstein`?",
+    "answer": "Mary Shelley",
+    "text": "Кто написал «Франкенштейна»?",
+    "answers": [
+      "Мэри Шелли",
+      "Виктор Франкенштейн",
+      "Александр Пушкин",
+      "Виктор Гюго",
+      "Николай Гоголь"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which singer is famous for his `moonwalk` dance?",
+    "answer": "Michael Jackson",
+    "text": "Какой певец известен своим танцем «лунная походка»?",
+    "answers": [
+      "Майкл Джексон",
+      "Майкл Джордан",
+      "Шакил О-Нил",
+      "Элвис Пресли",
+      "Фредди Меркьюри"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which cartoon character has an anchor tatooed on his arm?",
+    "answer": "Popeye",
+    "text": "У какого мультяшного персонажа на руке вытатуирован якорь?",
+    "answers": [
+      "Моряк Попай",
+      "Гомер Симпсон",
+      "Бендер из Футурамы",
+      "Фокс Малдер",
+      "Червяк Джим"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following colours does not appear on the Argentinian flag? Red, White or Blue?",
+    "answer": "Red",
+    "text": "Какого из следующих цветов нет на аргентинском флаге?",
+    "answers": [
+      "Красный",
+      "Белый",
+      "Синий",
+      "Желтый",
+      "Голубой"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which country in the world has the highest population?",
+    "answer": "China",
+    "text": "В какой стране мира самое большое население?",
+    "answers": [
+      "Китай",
+      "Россия",
+      "США",
+      "Индия",
+      "Япония"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the highest mountain in the world?",
+    "answer": "Mount Everest",
+    "text": "Какая самая высокая гора в мире?",
+    "answers": [
+      "Эверест",
+      "Гималаи",
+      "Карпаты",
+      "Эльбрус",
+      "Килиманджаро"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Vienna is the capital of which country?",
+    "answer": "Austria",
+    "text": "Вена - столица какой страны?",
+    "answers": [
+      "Австрия",
+      "Австралия",
+      "Швейцария",
+      "Германия",
+      "Финлядния"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Honolulu is the capital of which American state?",
+    "answer": "Hawaii",
+    "text": "Гонолулу является столицей какого американского штата?",
+    "answers": [
+      "Гавайи",
+      "Канзас",
+      "Колорадо",
+      "Миссисипи",
+      "Огайо"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the Japanese art-form of paper folding called?",
+    "answer": "Origami",
+    "text": "Как называется японское искусство складывания бумаги?",
+    "answers": [
+      "Оригами",
+      "Кусудама",
+      "Манга",
+      "Харакири",
+      "Ахэгао"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The city of London stands on which of the following rivers? Thames, Severn or Tay?",
+    "answer": "Thames",
+    "text": "На какой из следующих рек стоит город Лондон?",
+    "answers": [
+      "Темза",
+      "Маккензи",
+      "Волга",
+      "Амазонка",
+      "Миссисипи"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What sport would you expect to see in a velodrome?",
+    "answer": "Cycling",
+    "text": "Какой вид спорта вы ожидаете увидеть на велодроме?",
+    "answers": [
+      "Катание на велосипеде",
+      "Занятие боксом",
+      "Метание диска",
+      "Прыжки в высоту",
+      "Прыжки в длину"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many legs does a spider have?",
+    "answer": "8",
+    "text": "Сколько ног у паука?",
+    "answers": [
+      "8",
+      "10",
+      "4",
+      "12",
+      "6"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The drink Tequila originates from what country?",
+    "answer": "Mexico",
+    "text": "Из какой страны родом напиток Текила?",
+    "answers": [
+      "Мексика",
+      "Италия",
+      "Индия",
+      "Колумбия",
+      "Рио-де-Жанейро"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Greek mythology, who was killed by a poisoned arrow in his heel?",
+    "answer": "Achilles",
+    "text": "Кто в греческой мифологии был убит отравленной стрелой в пятке?",
+    "answers": [
+      "Ахиллес",
+      "Прометей",
+      "Зевс",
+      "Уран",
+      "Посейдон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many sides has a heptagon?",
+    "answer": "7",
+    "text": "Сколько сторон у гептагона?",
+    "answers": [
+      "7",
+      "5",
+      "10",
+      "6",
+      "9"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Is the bottom stripe on the USA flag red or white?",
+    "answer": "Red",
+    "text": "Какой цвет имеет нижняя полона на флаге США?",
+    "answers": [
+      "Красный",
+      "Белый",
+      "Синий",
+      "Желтый",
+      "Черный"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which character is Arthur Conan Doyle most famous for creating?",
+    "answer": "Sherlock Holmes",
+    "text": "За создание какого персонажа наиболее известен Артур Конан Дойль",
+    "answers": [
+      "Шерлок Холмс",
+      "Робинзон Крузо",
+      "Франкенштейн",
+      "Гарри Поттер",
+      "Бильбо Беггинс"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many legs does an ant have?",
+    "answer": "6",
+    "text": "Сколько ног у муравья?",
+    "answers": [
+      "6",
+      "4",
+      "8",
+      "12",
+      "10"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which of the following is not a continent? North America, Central America or South America?",
+    "answer": "Central America",
+    "text": "Что из перечисленного не является континентом?",
+    "answers": [
+      "Северная Америка",
+      "Центральная Америка",
+      "Южная Америка",
+      "Австралия",
+      "Азия"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour is the middle stripe on the Irish flag?",
+    "answer": "White",
+    "text": "Какого цвета средняя полоса на ирландском флаге?",
+    "answers": [
+      "Белый",
+      "Зеленый",
+      "Красный",
+      "Оранжевый",
+      "Желтый"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many sides does an octagon have?",
+    "answer": "8",
+    "text": "Сколько сторон имеет октагон",
+    "answers": [
+      "8",
+      "10",
+      "7",
+      "6",
+      "12"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many tentacles does an Octopus have?",
+    "answer": "8",
+    "text": "Сколько щупалец у осьминога?",
+    "answers": [
+      "8",
+      "12",
+      "10",
+      "6",
+      "Не имеет щупалец"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the capital of Austria?",
+    "answer": "Vienna",
+    "text": "Какая столица Австрии?",
+    "answers": [
+      "Вена",
+      "Киев",
+      "Сидней",
+      "Канберра",
+      "Анкара"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour are the stars on the Australian flag?",
+    "answer": "White",
+    "text": "Какого цвета звезды на австралийском флаге?",
+    "answers": [
+      "Белый",
+      "Зеленый",
+      "Желтый",
+      "Черный",
+      "Синий"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What was the 50th state to join the United States of America?",
+    "answer": "Hawaii",
+    "text": "Какой штат стал 50-м штатом, присоединившимся к Соединенным Штатам Америки?",
+    "answers": [
+      "Гавайи",
+      "Огайо",
+      "Айдахо",
+      "Аляка",
+      "Аризона"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In a standard game of poker, what is the name given to the strongest hand?",
+    "answer": "A royal flush",
+    "text": "Как называется самая сильная комбинация в стандартной игре в покер?",
+    "answers": [
+      "Флеш-рояль",
+      "Фул-хаус",
+      "Каре",
+      "Высшая карта",
+      "Стрит-флеш"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which sea does the river Thames flow into?",
+    "answer": "North Sea",
+    "text": "В какое море впадает река Темза?",
+    "answers": [
+      "Северное море",
+      "Черное море",
+      "Красное море",
+      "Средиземное море",
+      "Саргассово море"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which wedding anniversary would you celebrate after 25 years?",
+    "answer": "Silver",
+    "text": "Какую годовщину свадьбы вы бы отметили через 25 лет?",
+    "answers": [
+      "Серебрянная",
+      "Золотая",
+      "Бронзовая",
+      "Платиновая",
+      "Бриллиантовая"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the sum of the internal angles of any triangle?",
+    "answer": "180 degrees",
+    "text": "Какова сумма внутренних углов любого треугольника?",
+    "answers": [
+      "180",
+      "360",
+      "270",
+      "90",
+      "45"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which American state is Hollywood?",
+    "answer": "California",
+    "text": "В каком американском штате находится Голливуд?",
+    "answers": [
+      "Калифорния",
+      "Мэриленд",
+      "Коннектикут",
+      "Кентуки",
+      "Колорадо"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which century did Alexander Graham Bell invent the telephone?",
+    "answer": "19th",
+    "text": "В каком веке Александр Грэм Белл изобрел телефон?",
+    "answers": [
+      "19",
+      "18",
+      "17",
+      "20",
+      "16"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the second letter of the Greek alphabet?",
+    "answer": "Beta",
+    "text": "Какая вторая буква греческого алфавита?",
+    "answers": [
+      "Бета",
+      "Альфа",
+      "Чарли",
+      "Браво",
+      "Омега"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What was the name of the third fillm in the `Die Hard` series?",
+    "answer": "`Die Hard: With A Vengeance",
+    "text": "Как назывался третий фильм из серии «Крепкий орешек»?",
+    "answers": [
+      "Возмездие",
+      "Воскрешение",
+      "Начало",
+      "Последняя битва",
+      "Месть падших"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Greek mythology what is the name of the winged horse?",
+    "answer": "Pegasus",
+    "text": "В греческой мифологии как зовут крылатого коня?",
+    "answers": [
+      "Пегас",
+      "Грифон",
+      "Горгулья",
+      "Титан",
+      "Цербер"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Poseidon and Neptune were the Greek and Roman Gods of what?",
+    "answer": "The sea",
+    "text": "Посейдон и Нептун были греческими и римскими богами чего?",
+    "answers": [
+      "Моря",
+      "Неба",
+      "Войны",
+      "Мира",
+      "Огня"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the capital city of Scotland?",
+    "answer": "Edinburgh",
+    "text": "Какая столица Шотландии?",
+    "answers": [
+      "Эдинбург",
+      "Стокгольм",
+      "Сидней",
+      "Хельсинки",
+      "Стамбул"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In the music world, by what name is Marshall Bruce Mathers III better known?",
+    "answer": "Eminem",
+    "text": "Под каким именем в музыкальном мире более известен Маршалл Брюс Мэтерс III?",
+    "answers": [
+      "Эминем",
+      "Честер Беннингтон",
+      "Lil Pump",
+      "50 cent",
+      "Dr Dre"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which Japanese word means `empty orchestra`?",
+    "answer": "Karaoke",
+    "text": "Какое японское слово означает «пустой оркестр»?",
+    "answers": [
+      "Караоке",
+      "Оригами",
+      "Харакири",
+      "Пианино",
+      "Скрипка"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many pawns does each player have in a game of chess?",
+    "answer": "8",
+    "text": "Сколько пешек у каждого игрока в шахматной партии?",
+    "answers": [
+      "8",
+      "10",
+      "12",
+      "2",
+      "4"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "If you were puting numbers on new changing room lockers to be numbered from 1 to 100, how many times would you use the number 9?",
+    "answer": "20",
+    "text": "Если бы вы ставили на новые шкафчики раздевалки номера от 1 до 100, сколько раз вы использовали бы цифру 9?",
+    "answers": [
+      "20",
+      "10",
+      "21",
+      "11",
+      "15"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What sort of creature is a cassowary?",
+    "answer": "A (flightless) bird",
+    "text": "Что за существо - казуар?",
+    "answers": [
+      "Птица",
+      "Койот",
+      "Тигр",
+      "Мышь",
+      "Вымышленное существо"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "According the the Bible how many of each type of animal did Moses take on the Ark?",
+    "answer": "None (Noah did)",
+    "text": "Согласно Библии, сколько животных каждого вида взял Моисей в Ковчег?",
+    "answers": [
+      "0",
+      "Каждой твари по паре",
+      "36",
+      "100",
+      "146"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In literature, who owns a cat called Crookshanks?",
+    "answer": "Hermione Granger (from the Harry Potter stories)",
+    "text": "В литературе, кому принадлежит кошка по кличке Крукшенкс?",
+    "answers": [
+      "Гермиона Грейнджер",
+      "Гарри Поттер",
+      "Бильбо Беггинс",
+      "Робинзон Крузо",
+      "Джим Хокинс"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In Britain, what is the only road sign to be on an inverted triangle?",
+    "answer": "Give Way",
+    "text": "Какой единственный дорожный знак в Великобритании стоит на перевернутом треугольнике?",
+    "answers": [
+      "Уступи дорогу",
+      "Остановись",
+      "Езжай вперед",
+      "Езжай назад",
+      "Развернись"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which US rapper died on September 13th 1996 after being shot in a drive-by shooting after watchin Mike Tysons comeback fight 7 days earlier?",
+    "answer": "Tupac Shakur",
+    "text": "Какой американский рэпер умер 13 сентября 1996 года после того, как был застрелен из проезжавшего мимо автомобиля после просмотра боя Майка Тайсона в камбэке 7 дней назад?",
+    "answers": [
+      "Тупак Шакур",
+      "Честер Беннингтон",
+      "50 cent",
+      "Dr Dre",
+      "Снуп Дог"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many different scoring areas are there on a standard dart board?",
+    "answer": "82",
+    "text": "Сколько различных областей для подсчета очков на стандартной доске для дартса?",
+    "answers": [
+      "82",
+      "70",
+      "69",
+      "96",
+      "100"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What colour are the shorts that Bart Simpson normally wears?",
+    "answer": "Blue",
+    "text": "Какого цвета шорты, которые обычно носит Барт Симпсон?",
+    "answers": [
+      "Синий",
+      "Оранжевый",
+      "Черный",
+      "Зеленый",
+      "Фиолетовый"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which art gallery is the Mona Lisa kept?",
+    "answer": "The Louvre",
+    "text": "В какой картинной галерее хранится Мона Лиза?",
+    "answers": [
+      "Лувр",
+      "Эрмитаж",
+      "Британский музей",
+      "Лондонский Тауэр",
+      "Кремль"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which spider gets its name from when the female sometimes eats the male after mating?",
+    "answer": "Black Widow Spider",
+    "text": "Какой паук получил свое название от того, когда самка иногда поедает самца после спаривания?",
+    "answers": [
+      "Черная Вдова",
+      "Каракурт",
+      "Тарантул",
+      "Паук-оса",
+      "Хиракантид"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which country would you find the Mojave Desert?",
+    "answer": "USA",
+    "text": "В какой стране вы найдете пустыню Мохаве?",
+    "answers": [
+      "США",
+      "Африка",
+      "Индия",
+      "Австралия",
+      "Мексика"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Genghis Khan founded which empire?",
+    "answer": "Mongol empire",
+    "text": "Какую империю основал Чингисхан?",
+    "answers": [
+      "Монгольская",
+      "Китайская",
+      "Японскай",
+      "Татарская",
+      "Индийская"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who painted the famous painting The Scream?",
+    "answer": "Edward Munch",
+    "text": "Кто написал знаменитую картину «Крик»?",
+    "answers": [
+      "Эдвард Мунк",
+      "Леонардо Ди Каприо",
+      "Леонардо да Винчи",
+      "Казимир Малевич",
+      "Мона Лиза"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What does the information technology term RAM stand for?",
+    "answer": "Random Access Memory",
+    "text": "Как расшифровывается термин ОЗУ в области информационных технологий",
+    "answers": [
+      "Оперативное запоминающее устройство",
+      "Оперативное звуковое устройство",
+      "Оперативный зверь-убийца",
+      "Обалденное записывающее устройство",
+      "Обеденное запоминающее ублажение"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the lightest chemical element?",
+    "answer": "Hydrogen",
+    "text": "Какой химический элемент самый легкий?",
+    "answers": [
+      "Гидроген",
+      "Оксиген",
+      "Азот",
+      "Гелий",
+      "Литий"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "By what name is the Sodium Chloride more commonly known?",
+    "answer": "Salt",
+    "text": "Под каким названием чаще всего известен хлорид натрия?",
+    "answers": [
+      "Соль",
+      "Хлоридная кислота",
+      "Солевая кислота",
+      "Амиак",
+      "Радиоактивный элемент"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who wrote War and Peace?",
+    "answer": "Leo Tolstoy",
+    "text": "Кто написал «Войну и мир»?",
+    "answers": [
+      "Лев Толстой",
+      "Александр Пушкин",
+      "Леонардо да Винчи",
+      "Виктор Франкенштейн",
+      "Бенедикт Камбербетч"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "The does the chemical symbol Pb stand for?",
+    "answer": "Lead",
+    "text": "Что означает химический символ Pb?",
+    "answers": [
+      "Свинец",
+      "Платина",
+      "Ртуть",
+      "Вольфрам",
+      "Полоний"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which bird can run the fastest?",
+    "answer": "Ostrich",
+    "text": "Какая птица бегает быстрее всех?",
+    "answers": [
+      "Страус",
+      "Казуар",
+      "Фрегат",
+      "Ястреб",
+      "Кенгуру"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which artist painted the famous `Sunflowers`?",
+    "answer": "Vincent Van Gogh",
+    "text": "Какой художник написал знаменитые «Подсолнухи»",
+    "answers": [
+      "Винсент Ван Гог",
+      "Пабло Пикассо",
+      "Казимир Малевич",
+      "Александр Пушкин",
+      "Лев Толстой"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What name is given to a matador on horseback?",
+    "answer": "Picador",
+    "text": "Как называют матадора верхом на лошади?",
+    "answers": [
+      "Пикадор",
+      "Матадор",
+      "Наездник",
+      "Тореадор",
+      "Угонщик"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the correct term for the people commonly known as `Eskimos`?",
+    "answer": "Inuit",
+    "text": "Как правильно называть людей, широко известных как «эскимосы»?",
+    "answers": [
+      "Инуиты",
+      "Шаманы",
+      "Пингвины",
+      "Индейцы",
+      "Моряки"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "From what stone is the Taj Mahal built?",
+    "answer": "Мрамор",
+    "text": "Из какого камня построен Тадж-Махал?",
+    "answers": [
+      "Мрамор",
+      "Кирпич",
+      "Песчаник",
+      "Граник",
+      "Золото"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the world`s largest lake?",
+    "answer": "The Caspian Sea",
+    "text": "Какое озеро самое большое в мире?",
+    "answers": [
+      "Каспийское море",
+      "Виктория",
+      "Гурон",
+      "Байкал",
+      "Черное море"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What train would you find on platform 9 and three quarters at Kings Cross?",
+    "answer": "The Hogwarts Express",
+    "text": "Какой поезд вы найдете на платформе «девять и три чертверти»?",
+    "answers": [
+      "Хогвартс Экспресс",
+      "Полярный Экспресс",
+      "Экспресс новичков",
+      "Москва-Киев",
+      "Киев-Житомир"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the highest score a judge can award in figure skating?",
+    "answer": "6",
+    "text": "Какую наивысшую оценку может дать судья в фигурном катании?",
+    "answers": [
+      "6",
+      "10",
+      "3",
+      "5",
+      "4"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the tallest grass in the world?",
+    "answer": "Bamboo",
+    "text": "Какая самая высокая трава в мире?",
+    "answers": [
+      "Бамбук",
+      "Банан",
+      "Подсолнух",
+      "Тростник",
+      "Кукурузные стебла"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who played Luke Skywalker in `Star Wars`?",
+    "answer": "Mark Hamill",
+    "text": "Кто играл Люка Скайуокера в «Звездных войнах»?",
+    "answers": [
+      "Марк Хэмилл",
+      "Марк Цукерберг",
+      "Майкл Фассбендер",
+      "Джеймс Макэвой",
+      "Оби-Ван Кеноби"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which artist is responsible for `Self Portrait With Bandaged Ear`?",
+    "answer": "Vincent Van Gogh",
+    "text": "Какой художник написал «Автопортрет с перевязанным ухом»?",
+    "answers": [
+      "Винсент Ван Гог",
+      "Мона Лиза",
+      "Казимир Малевич",
+      "Пабло Пикассо",
+      "Леонардо Ди Каприо"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the sum of all the numbers round a dartboard?",
+    "answer": "210",
+    "text": "Какова сумма всех чисел на доске для дротика?",
+    "answers": [
+      "210",
+      "146",
+      "300",
+      "69",
+      "100"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which state did Arnold Schwarzenegger become Governor of in November 2003?",
+    "answer": "California",
+    "text": "Губернатором какого штата стал Арнольд Шварценеггер в ноябре 2003 года?",
+    "answers": [
+      "Калифорния",
+      "Вашингтон",
+      "Нью-Йорк",
+      "Флорида",
+      "Колорадо"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the common name for the chemical ethanol? Alcohol, Ammonia or Citric Acid?",
+    "answer": "Alcohol",
+    "text": "Каково общее название химического этанола?",
+    "answers": [
+      "Алкоголь",
+      "Аммиак",
+      "Лимонная кислота",
+      "Водка",
+      "Уксусная кислота"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "According to the Bible, who committed the first ever murder?",
+    "answer": "Cain",
+    "text": "Согласно Библии, кто совершил первое убийство?",
+    "answers": [
+      "Каин",
+      "Адам",
+      "Ева",
+      "Иисус",
+      "Сатана"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who invented the light bulb?",
+    "answer": "Thomas Edison",
+    "text": "Кто изобрел лампочку?",
+    "answers": [
+      "Томас Эдисон",
+      "Николай Тесла",
+      "Стив Джобс",
+      "Леонардо да Винчи",
+      "Карл Маркс"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What does a Gieger counter measure?",
+    "answer": "Radioactivity",
+    "text": "Что измеряет счетчик Гейгера?",
+    "answers": [
+      "Радиоактивность",
+      "Время",
+      "Температуру",
+      "Влажность",
+      "Давление"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the largest city in Scotland?",
+    "answer": "Glasgow",
+    "text": "Какой город в Шотландии самый большой?",
+    "answers": [
+      "Глазго",
+      "Женева",
+      "Цюрих",
+      "Лейпциг",
+      "Эдинбург"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which film did Arnold Swarzenegger say `I`ll be back` for the first time?",
+    "answer": "The Terminator",
+    "text": "В каком фильме Арнольд Шварценеггер впервые сказал: «Я еще вернусь»",
+    "answers": [
+      "Терминатор",
+      "Робокоп",
+      "Полицейская академия",
+      "Судья Дредд",
+      "Мстители: война бесконечности"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "How many penalty strokes are added for a lost ball in golf?",
+    "answer": "1",
+    "text": "Сколько штрафных ударов добавляется за потерянный мяч в гольфе?",
+    "answers": [
+      "1",
+      "0",
+      "3",
+      "2",
+      "5"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In `The Flintstones`, what is Barney`s wife called?",
+    "answer": "Betty",
+    "text": "Как зовут жену Барни в «Флинтстоунах»?",
+    "answers": [
+      "Бетти",
+      "Мардж",
+      "Лиза",
+      "Лила",
+      "Барни не имел жены"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which sea separates Saudi Arabia from Egypt and the Sudan?",
+    "answer": "The Red Sea",
+    "text": "Какое море отделяет Саудовскую Аравию от Египта и Судана?",
+    "answers": [
+      "Красное море",
+      "Черное море",
+      "Карибскоре море",
+      "Средиземное море",
+      "Море Лазарева"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the fastest animal on 2 legs, which can reach a speed of around 40 miles per hour?",
+    "answer": "The ostrich",
+    "text": "Какое животное на 2 ногах самое быстрое, которое может развивать скорость около 40 миль в час?",
+    "answers": [
+      "Страус",
+      "Казуар",
+      "Кенгуру",
+      "Тигр",
+      "Лев"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Who played the title role in the 1983 film `Scarface`?",
+    "answer": "Al Pacino",
+    "text": "Кто сыграл главную роль в фильме 1983 года «Лицо со шрамом»?",
+    "answers": [
+      "Аль Пачино",
+      "Мухаммед Али",
+      "Томми Версетти",
+      "Луис Лопес",
+      "Джонни Депп"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which two months are named after Roman Emperors?",
+    "answer": "July and August",
+    "text": "Какой из месяцев назван в честь римского императора",
+    "answers": [
+      "Июль",
+      "Июнь",
+      "Сентябь",
+      "Май",
+      "Январь"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In what film does Bill Murray play a character who keeps reliving the same day over and over again?",
+    "answer": "Groundhog Day",
+    "text": "В каком фильме Билл Мюррей играет персонажа, который снова и снова переживает один и тот же день?",
+    "answers": [
+      "День сурка",
+      "Терминатор",
+      "Охотники за привидениями",
+      "Битва экстрасенсов",
+      "Симпсоны"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the first prime number greater than 50?",
+    "answer": "53",
+    "text": "Какое первое простое число больше 50?",
+    "answers": [
+      "53",
+      "51",
+      "52",
+      "55",
+      "60"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In which country did the religion of Rastafarianism originate?",
+    "answer": "Jamaica",
+    "text": "В какой стране зародилась религия растафарианство?",
+    "answers": [
+      "Ямайка",
+      "Мексика",
+      "Италия",
+      "Испания",
+      "Бразилии"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "What is the national dance of Brazil?",
+    "answer": "The samba",
+    "text": "Какой танец является национальным в Бразилии?",
+    "answers": [
+      "Самба",
+      "Балет",
+      "Танго",
+      "Ча-ча-ча",
+      "Румба"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which metal has the chemical symbol Ag?",
+    "answer": "Silver",
+    "text": "Какой элемент имеет химический символ Ag?",
+    "answers": [
+      "Серебро",
+      "Золото",
+      "Алюминий",
+      "Свинец",
+      "Аргон"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Which superhero has a butler named Alfred?",
+    "answer": "Batman",
+    "text": "У какого супергероя есть дворецкий по имени Альфред?",
+    "answers": [
+      "Бетмен",
+      "Супермен",
+      "Железный человек",
+      "Халк",
+      "Капитан Америка"
+    ],
+    "correctIndex": 0
+  }
+]

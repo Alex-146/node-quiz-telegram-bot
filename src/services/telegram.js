@@ -12,11 +12,19 @@ const {
 } = require("./telegram/keyboards")
 const { getLifetimeByHours } = require("../utils")
 
+const actions = {
+  developer: {
+    addBalance: "developer:addBalance",
+    resetBalance: "developer:resetBalance",
+    resetHistory: "developer:resetHistory"
+  }
+}
+
 function createBot() {
   const bot = new Telegraf(process.env.TELEGRAM_TOKEN)
 
   const i18n = new TelegrafI18n({
-    defaultLanguage: "en",
+    defaultLanguage: "ru",
     directory: path.resolve("src", "locales")
   })
 
@@ -65,7 +73,8 @@ function createBot() {
     await user.save()
 
     await ctx.reply("Be ready!", Markup.removeKeyboard())
-    await user.generateQuiz()
+    user.generateQuiz(quiz.amountOfQuestions)
+    await user.save()
     sendNextQuestionToUser(ctx)
   }
 
@@ -102,8 +111,9 @@ function createBot() {
   function showDeveloperKeyboard(ctx) {
     const text = ctx.i18n.t("developer.keyboard-title")
     const keyboard = Markup.inlineKeyboard([
-      [Markup.button.callback("Добавить money", "developer:addBalance")],
-      [Markup.button.callback("Обнулить money", "developer:resetBalance")],
+      [Markup.button.callback("Добавить money", actions.developer.addBalance)],
+      [Markup.button.callback("Обнулить money", actions.developer.resetBalance)],
+      [Markup.button.callback("Очистить историю", actions.developer.resetHistory)],
     ])
     return ctx.reply(text, keyboard)
   }
@@ -123,6 +133,14 @@ function createBot() {
     await user.save()
     ctx.answerCbQuery()
     return ctx.reply("Обнулено")
+  }
+
+  async function developerResetHistory(ctx) {
+    const user = ctx.state.user
+    user.quiz.history = []
+    await user.save()
+    ctx.answerCbQuery()
+    return ctx.reply("Очищено")
   }
 
   const sendNextQuestionToUser = async (ctx) => {
@@ -305,9 +323,11 @@ function createBot() {
 
   bot.hears(TelegrafI18n.match("keyboard.developer"), fetchUser(), developerAccess(), showDeveloperKeyboard)
 
-  bot.action("developer:addBalance", fetchUser(), developerAccess(), developerAddBalance)
+  bot.action(actions.developer.addBalance, fetchUser(), developerAccess(), developerAddBalance)
 
-  bot.action("developer:resetBalance", fetchUser(), developerAccess(), developerResetBalance)
+  bot.action(actions.developer.resetBalance, fetchUser(), developerAccess(), developerResetBalance)
+
+  bot.action(actions.developer.resetHistory, fetchUser(), developerAccess(), developerResetHistory)
 
   bot.on("text", fetchUser(), ctx => {
     // throw new Error("foo")

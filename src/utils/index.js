@@ -10,9 +10,7 @@ function shuffle(array) {
   return array
 }
 
-function generateQuiz() {
-  // todo: provide array
-  const quizArray = require("../data/quiz.json")
+function generateQuiz(quizArray) {
   const shuffled = shuffle(quizArray).map(entry => {
     const correctAnswer = entry.answers[entry.correctIndex]
     entry.answers = shuffle(entry.answers)
