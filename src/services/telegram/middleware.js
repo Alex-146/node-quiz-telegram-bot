@@ -1,4 +1,5 @@
 const { findUserByChatId } = require("../../db/mongo")
+const { getItemById } = require("./config")
 
 function fetchUser(showMessage = true) {
   return async (ctx, next) => {
@@ -31,7 +32,24 @@ function developerAccess(showMessage = true) {
   }
 }
 
+function fetchItem() {
+  // ! regex.exec(ctx.callbackQuery.data)[1]
+  return (ctx, next) => {
+    const id = ctx.match[1]
+    const item = getItemById(id)
+    if (item) {
+      ctx.state.item = item
+      return next()
+    }
+    else {
+      const text = ctx.i18n.t("errors.itemNotFound")
+      return ctx.reply(text)
+    }
+  }
+}
+
 module.exports = {
   fetchUser,
-  developerAccess
+  developerAccess,
+  fetchItem
 }

@@ -4,14 +4,16 @@ const path = require("path")
 const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { getConfig, getItemById } = require("./telegram/config")
 const { createUser, findUserByChatId } = require("../db/mongo")
-const { fetchUser, developerAccess } = require("./telegram/middleware")
+const { fetchUser, developerAccess, fetchItem } = require("./telegram/middleware")
 const {
   paymentInlineKeyboard,
   paymentItemsInlineKeyboard,
   mainKeyboard,
 } = require("./telegram/keyboards")
-const { getLifetimeByHours } = require("../utils")
+const payments = require("./qiwi/local")
+const { sleep } = require("../utils")
 
+// todo: separate file
 const actions = {
   developer: {
     addBalance: "developer:addBalance",
@@ -33,10 +35,18 @@ function createBot() {
   bot.use(session())
   bot.use(stage.middleware())
 
+  /*
+  bot.telegram.setMyCommands([
+    { command: "start", description: "1. start" },
+    { command: "help", description: "2. help" }
+  ])
+  */
+
   async function startHandler(ctx) {
     const id = ctx.chat.id
     const candidate = await findUserByChatId(id)
     if (!candidate) {
+      // todo: add startPayload
       await createUser(id)
       return ctx.scene.enter(SCENE_NAMES.START)
     }
@@ -57,7 +67,7 @@ function createBot() {
   function displayProfile(ctx) {
     const user = ctx.state.user
     const text = ctx.i18n.t("profile", { user })
-    return ctx.replyWithHTML(text)
+    return ctx.replyWithHTML(text, mainKeyboard(ctx))
   }
 
   async function playQuizHandler(ctx) {
@@ -94,7 +104,9 @@ function createBot() {
 
   async function displayShop(ctx) {
     const user = ctx.state.user
-    const bill = await user.hasActiveBill()
+
+    // todo: check for EXPIRED status?
+    const bill = user.payments.current
 
     if (!bill) {
       // show shop items to user
@@ -177,12 +189,14 @@ function createBot() {
         console.log(error.message)
       }
     }
-    setTimeout(stopHandler, wait)
+    return sleep(wait).then(stopHandler)
+
+    // setTimeout(stopHandler, wait)
   }
 
   function showCurrentPayment(ctx) {
     const { status, payUrl, customFields } = ctx.state.bill
-    if (status.value === "WAITING") {
+    if (status.value === payments.status.WAITING) {
       const item = getItemById(customFields.itemId)
       const text = ctx.i18n.t("payments.waiting", { item })
       const kb = paymentInlineKeyboard(ctx.i18n, payUrl)
@@ -193,7 +207,7 @@ function createBot() {
         return ctx.editMessageText(text, kb)
       }
     }
-    else if (status.value === "PAID") {
+    else if (status.value === payments.status.PAID) {
       const text = ctx.i18n.t("payments.completed")
       if (ctx.message) {
         return ctx.reply(text)
@@ -226,11 +240,11 @@ function createBot() {
         user.payments.balance += quiz.successRewardPrice
         await user.save()
         const text = ctx.i18n.t("quiz.success", { correct, total, userBalance: user.payments.balance })
-        ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
+        await ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
       }
       else {
         const text = ctx.i18n.t("quiz.failed", { correct, total })
-        ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
+        await ctx.telegram.sendMessage(userId, text, mainKeyboard(ctx))
       }
       await user.restoreQuiz()
     }
@@ -242,61 +256,118 @@ function createBot() {
 
   bot.hears(TelegrafI18n.match("keyboard.shop"), fetchUser(), displayShop)
 
-  const paymentRegex = /payment:new:(.+)/
-  bot.action(paymentRegex, fetchUser(), async (ctx) => {
-    await ctx.answerCbQuery()
-
+  bot.action(/^payment:new:(.+)/, fetchUser(), fetchItem(), async (ctx) => {
     const user = ctx.state.user
-    const bill = await user.hasActiveBill()
+
+    // todo: check for EXPIRED status?
+    const bill = user.payments.current
 
     if (!bill) {
       // create new bill according to clicked item
-      const itemId = paymentRegex.exec(ctx.callbackQuery.data)[1]
-      const item = getItemById(itemId)
+      const item = ctx.state.item
 
-      const { payments } = getConfig()
-      const hourDuration = payments.durationInHours
+      const config = getConfig()
+      const hourDuration = config.payments.durationInHours
+
+      const customFields = {
+        itemId: item.id
+      }
   
-      const { payUrl } = await user.generateBill({
-        billId: `${ctx.from.id}-${Date.now()}`,
-        amount: item.price,
-        currency: "RUB",
-        comment: "Оплата товара",
-        expirationDateTime: getLifetimeByHours(hourDuration), 
-        customFields: {
-          itemId: item.id
-        }
-      })
+      const response = await payments.createBill(item.price, hourDuration, customFields)
+
+      if (!response.ok) {
+        const err = response.error
+        console.log(err)
+        return ctx.editMessageText(`${err.name}⚠️something went wrong when creating bill`)
+      }
+
+      const { billId, amount, status, payUrl } = response.data
+      const bill = {
+        method: payments.type,
+        payUrl,
+        billId,
+        amount,
+        status,
+        customFields
+      }
+      user.payments.current = bill
+      await user.save()
+
       const text = ctx.i18n.t("payments.new", { item, hourDuration })
-      ctx.editMessageText(text, paymentInlineKeyboard(ctx.i18n, payUrl))
+      return ctx.editMessageText(text, paymentInlineKeyboard(ctx.i18n, payUrl))
     }
     else {
       // send bill that user already has
       ctx.state.bill = bill
-      showCurrentPayment(ctx)
+      return showCurrentPayment(ctx)
     }
   })
 
   // todo: использовать middleware для обработки покупки если она завершена (как в payment:check)
   bot.action("payment:cancel", fetchUser(), async (ctx) => {
     const user = ctx.state.user
-    await user.cancelPayment()
-    // todo: check if bill already paid
-    const text = ctx.i18n.t("payments.rejected")
-    return ctx.editMessageText(text)
+    const bill = user.payments.current
+    if (bill) {
+      // todo: check if bill already paid
+      const response = await payments.rejectBill(bill.billId) //todo: ok check
+      bill.status.value = response.data.status.value
+      user.payments.history.push(bill)
+      user.payments.current = null
+      await user.save()
+      const text = ctx.i18n.t("payments.rejected")
+      return ctx.editMessageText(text)
+    }
+    else {
+      return ctx.editMessageText("⚠️no bill when cancelling payment")
+    }
   })
 
   bot.action("payment:check", fetchUser(), async (ctx) => {
     const user = ctx.state.user
-    const response = await user.validateBillPayment()
+    
+    // todo: make each step as middleware?
 
-    if (response.error) {
-      return ctx.editMessageText(response.error)
+    const bill = user.payments.current
+    if (!bill) {
+      return ctx.editMessageText("⚠️user has no bill when validating payment")
     }
 
-    const { success, customFields } = response
-    if (success) {
-      const item = getItemById(customFields.itemId)
+    const response = await payments.getBillStatus(bill.billId)
+    if (!response.ok) {
+      const err = response.error
+      console.log(err)
+      return ctx.editMessageText(`${err.name}⚠️smth went wrong when getting bill status`)
+    }
+
+    const { status, customFields } = response.data
+
+    if (status.value === payments.status.PAID) {
+      const uniquePayment = true //todo: disable dublicates - only unique
+      if (uniquePayment) {
+        bill.status.value = payments.status.PAID
+        user.payments.history.push(bill)
+        user.paymnets.current = null
+        await user.save()
+        return successHandler(customFields.itemId)
+      }
+      else {
+        // todo: use i18n
+        return ctx.editMessageText("⚠️already paid")
+      }
+    }
+    else if (status.value === payments.status.EXPIRED) {
+      // ! в браузере <Счет просрочен> но здесь WAITING
+      // todo: push to history
+      // todo: use i18n
+      return ctx.editMessageText("⚠️expired")
+    }
+    else {
+      const text = ctx.i18n.t("payments.wait-notify")
+      return ctx.answerCbQuery(text)
+    }
+
+    async function successHandler(itemId) {
+      const item = getItemById(itemId)
       let amount = item.amount
       // check if first payment has active promo, if true - add more points to balance
       const { promocode } = getConfig()
@@ -308,10 +379,6 @@ function createBot() {
       await user.save()
       const text = ctx.i18n.t("payments.success", { balance: user.payments.balance })
       return ctx.editMessageText(text)
-    }
-    else {
-      const text = ctx.i18n.t("payments.wait-notify")
-      return ctx.answerCbQuery(text)
     }
   })
 
@@ -335,7 +402,7 @@ function createBot() {
   })
 
   bot.catch((err, ctx) => {
-    console.log(err.message)
+    console.log(err)
   })
 
   return bot
