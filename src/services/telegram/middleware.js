@@ -5,12 +5,12 @@ function fetchUser(showMessage = true) {
     const user = await findUserByChatId(ctx.chat.id)
     if (user) {
       ctx.state.user = user
-      next()
+      return next()
     }
     else {
       if (showMessage) {
         const text = ctx.i18n.t("errors.fetchUser")
-        ctx.reply(text)
+        return ctx.reply(text)
       }
     }
   }
@@ -20,12 +20,12 @@ function developerAccess(showMessage = true) {
   return (ctx, next) => {
     const user = ctx.state.user
     if (user.isDeveloper()) {
-      next()
+      return next()
     }
     else {
       if (showMessage) {
         const text = ctx.i18n.t("errors.developerAccess")
-        ctx.reply(text)
+        return ctx.reply(text)
       }
     }
   }

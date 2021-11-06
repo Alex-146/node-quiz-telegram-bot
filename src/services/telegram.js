@@ -38,13 +38,13 @@ function createBot() {
     const candidate = await findUserByChatId(id)
     if (!candidate) {
       await createUser(id)
-      ctx.scene.enter(SCENE_NAMES.START)
+      return ctx.scene.enter(SCENE_NAMES.START)
     }
     else {
       ctx.state.user = candidate
       const config = getConfig()
       const text = ctx.i18n.t("rules", { config })
-      ctx.reply(text, mainKeyboard(ctx))
+      return ctx.reply(text, mainKeyboard(ctx))
     }
   }
   
@@ -57,7 +57,7 @@ function createBot() {
   function displayProfile(ctx) {
     const user = ctx.state.user
     const text = ctx.i18n.t("profile", { user })
-    ctx.replyWithHTML(text)
+    return ctx.replyWithHTML(text)
   }
 
   async function playQuizHandler(ctx) {
@@ -84,11 +84,11 @@ function createBot() {
     const { success, total } = user.getQuizStats()
     if (success < payments.minWinsInQuiz) {
       const text = ctx.i18n.t("withdraw.not-allowed", { minCount: payments.minWinsInQuiz, userCount: success })
-      ctx.reply(text)
+      return ctx.reply(text)
     }
     else {
       const text = ctx.i18n.t("withdraw.scammed")
-      ctx.reply(text)
+      return ctx.reply(text)
     }
   }
 
@@ -283,7 +283,7 @@ function createBot() {
     await user.cancelPayment()
     // todo: check if bill already paid
     const text = ctx.i18n.t("payments.rejected")
-    ctx.editMessageText(text)
+    return ctx.editMessageText(text)
   })
 
   bot.action("payment:check", fetchUser(), async (ctx) => {
@@ -307,11 +307,11 @@ function createBot() {
       user.payments.balance += amount
       await user.save()
       const text = ctx.i18n.t("payments.success", { balance: user.payments.balance })
-      ctx.editMessageText(text)
+      return ctx.editMessageText(text)
     }
     else {
       const text = ctx.i18n.t("payments.wait-notify")
-      ctx.answerCbQuery(text)
+      return ctx.answerCbQuery(text)
     }
   })
 
@@ -330,8 +330,12 @@ function createBot() {
   bot.action(actions.developer.resetHistory, fetchUser(), developerAccess(), developerResetHistory)
 
   bot.on("text", fetchUser(), ctx => {
-    // throw new Error("foo")
-    ctx.reply(`echo: ${ctx.message.text}`)
+    throw new Error("foo")
+    return ctx.reply(`echo: ${ctx.message.text}`)
+  })
+
+  bot.catch((err, ctx) => {
+    console.log(err.message)
   })
 
   return bot
