@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.23.0",
     "mongoose": "^6.0.9",
+    "qiwi-sdk": "^2.1.4",
     "telegraf": "^4.4.2",
     "telegraf-i18n": "^6.6.0"
   },
