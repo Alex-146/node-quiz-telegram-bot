@@ -3,7 +3,8 @@
     "playPrice": 75,
     "successRewardPrice": 150,
     "voteTimeInSeconds": 10,
-    "amountOfQuestions": 5
+    "amountOfQuestions": 10,
+    "pathToJson": "../data/200-work.json"
   },
   "promocode": {
     "bonusAmount": 100,

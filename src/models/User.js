@@ -69,7 +69,7 @@ const schema = new Schema({
       default: 0,
     },
     current: paymentSchema,
-    history: [paymentSchema], // todo: change to payment entry
+    history: [paymentSchema],
     promocode: {
       active: {
         type: Boolean,
@@ -83,6 +83,7 @@ const schema = new Schema({
   },
 })
 
+/*
 schema.methods.generateQuiz = function(amount) {
   // const pathToQuestions = "../data/quiz.json" 
   const pathToQuestions = "../data/200-work.json"
@@ -94,22 +95,19 @@ schema.methods.generateQuiz = function(amount) {
   // получить все вопросы с общего списка который будут новыми для пользователя
   const unused = allQuestions.filter(q => !used.includes(q.text)).map(({ text, answers, correctIndex }) => ({ text, answers, correctIndex }))
 
-  const quiz = {
-    index: 0,
-    questions: [],
-  }
-  
   if (unused.length < amount) {
     // новых вопросов доступно меньше чем нужно
-    quiz.questions = generateQuiz(unused)
+    // quiz.questions = generateQuiz(unused)
   }
   else {
-    // todo: сейчас следующие вопросы идут в такой же очереди как в БД только между собой перемешаны
-    quiz.questions = generateQuiz(unused.slice(0, amount))
+    // // todo: сейчас следующие вопросы идут в такой же очереди как в БД только между собой перемешаны
+    return {
+      index: 0,
+      questions: generateQuiz(shuffle(unused).slice(0, amount)),
+    }
   }
-
-  this.quiz.current = quiz
 }
+*/
 
 schema.methods.generateQuizTemp = function() {
   const quizArray = require("../data/quiz.json")

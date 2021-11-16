@@ -11,7 +11,7 @@ const {
   mainKeyboard,
 } = require("./telegram/keyboards")
 const payments = require("./qiwi/local")
-const { sleep } = require("../utils")
+const { sleep, shuffle, generateQuiz } = require("../utils")
 
 // todo: separate file
 const actions = {
@@ -37,8 +37,8 @@ function createBot() {
 
   /*
   bot.telegram.setMyCommands([
-    { command: "start", description: "1. start" },
-    { command: "help", description: "2. help" }
+    { command: "start", description: "🤑" },
+    { command: "help", description: "🆘" }
   ])
   */
 
@@ -58,8 +58,9 @@ function createBot() {
     }
   }
   
-  //todo:
-  async function helpHandler(ctx) {}
+  function helpHandler(ctx) {
+    return ctx.reply("Используй команду /start и следуй инструкциям!")
+  }
 
   //todo:
   async function pollAnswerHandler(ctx) {}
@@ -72,19 +73,34 @@ function createBot() {
 
   async function playQuizHandler(ctx) {
     const user = ctx.state.user
-    const { quiz } = getConfig()
+    const config = getConfig()
 
-    if (user.payments.balance < quiz.playPrice) {
-      const text = ctx.i18n.t("quiz.not-allowed", { user, quiz })
+    const allQuestions = require(config.quiz.pathToJson)
+
+    // получить все вопросы викторин у которых проголосовал пользователь
+    const used = user.quiz.history.map(entry => entry.questions.filter(q => q.answerIndex !== -1).map(q => q.text)).flat()
+
+    // получить все вопросы с общего списка который будут новыми для пользователя
+    const unused = allQuestions.filter(q => !used.includes(q.text)).map(({ text, answers, correctIndex }) => ({ text, answers, correctIndex }))
+
+    if (unused.length < config.quiz.amountOfQuestions) {
+      const text = ctx.i18n.t("quiz.out-of-questions")
+      return ctx.reply(text)
+    }
+
+    if (user.payments.balance < config.quiz.playPrice) {
+      const text = ctx.i18n.t("quiz.not-allowed", { user, config })
       return ctx.reply(text)
     }
     
-    user.payments.balance -= quiz.playPrice
+    user.payments.balance -= config.quiz.playPrice
+    user.quiz.current = {
+      index: 0,
+      questions: generateQuiz(shuffle(unused).slice(0, config.quiz.amountOfQuestions)),
+    }
     await user.save()
 
     await ctx.reply("Be ready!", Markup.removeKeyboard())
-    user.generateQuiz(quiz.amountOfQuestions)
-    await user.save()
     sendNextQuestionToUser(ctx)
   }
 
@@ -182,6 +198,7 @@ function createBot() {
         }
         else if (poll.total_voter_count > 1) {
           // может ли пользователь переслать сообщение чтобы проголосовал кто-то другой?
+          console.log("poll.total_voter_count > 1", poll)
         }
       }
       catch(error) {
@@ -219,6 +236,8 @@ function createBot() {
   }
 
   bot.start(startHandler)
+  
+  bot.help(helpHandler)
 
   bot.on("poll_answer", async (ctx) => {
     const pollId = ctx.pollAnswer.poll_id
@@ -228,6 +247,10 @@ function createBot() {
     console.log("poll_answer", pollId, userId, answerIndex)
 
     const user = await findUserByChatId(userId)
+    if (!user) {
+      return console.log("poll_answer from undefined user")
+    }
+
     await user.voteInQuiz(answerIndex)
     ctx.state.user = user
 
@@ -277,8 +300,9 @@ function createBot() {
 
       if (!response.ok) {
         const err = response.error
-        console.log(err)
-        return ctx.editMessageText(`${err.name}⚠️something went wrong when creating bill`)
+        console.log("something went wrong when creating bill", err)
+        const text = ctx.i18n.t("errors.payment")
+        return ctx.editMessageText(text)
       }
 
       const { billId, amount, status, payUrl } = response.data
@@ -309,7 +333,15 @@ function createBot() {
     const bill = user.payments.current
     if (bill) {
       // todo: check if bill already paid
-      const response = await payments.rejectBill(bill.billId) //todo: ok check
+      const response = await payments.rejectBill(bill.billId)
+      
+      if (!response.ok) {
+        const err = response.error
+        console.log("smth went wrong when cancelling payment", err)
+        const text = ctx.i18n.t("errors.payment")
+        return ctx.editMessageText(text)
+      }
+
       bill.status.value = response.data.status.value
       user.payments.history.push(bill)
       user.payments.current = null
@@ -329,28 +361,32 @@ function createBot() {
 
     const bill = user.payments.current
     if (!bill) {
+      // todo: use i18n
       return ctx.editMessageText("⚠️user has no bill when validating payment")
     }
 
     const response = await payments.getBillStatus(bill.billId)
     if (!response.ok) {
       const err = response.error
-      console.log(err)
-      return ctx.editMessageText(`${err.name}⚠️smth went wrong when getting bill status`)
+      console.log("smth went wrong when getting bill status", err)
+      const text = ctx.i18n.t("errors.payment")
+      return ctx.editMessageText(text)
     }
 
     const { status, customFields } = response.data
 
     if (status.value === payments.status.PAID) {
-      const uniquePayment = true //todo: disable dublicates - only unique
+      // disable dublicates - only unique
+      const uniquePayment = !user.payments.history.find(p => p.billId === bill.billId)
       if (uniquePayment) {
         bill.status.value = payments.status.PAID
         user.payments.history.push(bill)
-        user.paymnets.current = null
+        user.payments.current = null
         await user.save()
         return successHandler(customFields.itemId)
       }
       else {
+        // ! this code never gonna executed since current payment becames null when checking for first time
         // todo: use i18n
         return ctx.editMessageText("⚠️already paid")
       }
@@ -368,17 +404,23 @@ function createBot() {
 
     async function successHandler(itemId) {
       const item = getItemById(itemId)
-      let amount = item.amount
       // check if first payment has active promo, if true - add more points to balance
       const { promocode } = getConfig()
+
       if (user.payments.promocode.active) {
-        amount += promocode.bonusAmount
+        const amount = item.amount + promocode.bonusAmount
         user.payments.promocode.active = false
+        user.payments.balance += amount
+        await user.save()
+        const text = ctx.i18n.t("payments.success-promo", { balance: user.payments.balance })
+        return ctx.editMessageText(text)
       }
-      user.payments.balance += amount
-      await user.save()
-      const text = ctx.i18n.t("payments.success", { balance: user.payments.balance })
-      return ctx.editMessageText(text)
+      else {
+        user.payments.balance += item.amount
+        await user.save()
+        const text = ctx.i18n.t("payments.success", { balance: user.payments.balance })
+        return ctx.editMessageText(text)
+      }
     }
   })
 
@@ -396,13 +438,17 @@ function createBot() {
 
   bot.action(actions.developer.resetHistory, fetchUser(), developerAccess(), developerResetHistory)
 
-  bot.on("text", fetchUser(), ctx => {
-    throw new Error("foo")
-    return ctx.reply(`echo: ${ctx.message.text}`)
+  // bot.on("text", fetchUser(), ctx => {
+  //   throw new Error("foo")
+  //   return ctx.reply(`echo: ${ctx.message.text}`)
+  // })
+
+  bot.on("message", (ctx) => {
+    return ctx.reply("Я тебя не понимаю!")
   })
 
   bot.catch((err, ctx) => {
-    console.log(err)
+    console.log("error catched:", ctx.updateType, ctx.update.update_id, err)
   })
 
   return bot

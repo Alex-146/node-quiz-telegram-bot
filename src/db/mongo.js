@@ -3,10 +3,10 @@ const mongoose = require("mongoose")
 const User = require("../models/User")
 
 const { generateQuiz } = require("../utils")
-const config = require("../services/telegram/config.json")
+const { getConfig } = require("../services/telegram/config")
 
 function connect() {
-  const uri = process.env.MONGO_URI_DEV
+  const uri = process.env.NODE_ENV === "production" ? process.env.MONGO_URI_PROD : process.env.MONGO_URI_DEV
   return mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -18,6 +18,7 @@ function close() {
 }
 
 async function createUser(id) {
+  const config = getConfig()
   const user = new User({
     client: {
       id
@@ -28,6 +29,7 @@ async function createUser(id) {
     }
   })
   await user.save()
+  return user
 }
 
 function findUserByChatId(id) {

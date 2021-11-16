@@ -1,4 +1,5 @@
 const { P2P } = require("qiwi-sdk")
+const { getLifetimeByHours } = require("../../utils")
 
 const p2p = new P2P(process.env.QIWI_PRIVATE_KEY, process.env.QIWI_PUBLIC_KEY)
 
@@ -9,7 +10,7 @@ async function createBill(price, hours, customFields) {
         value: price,
         currency: P2P.Currency.RUB
       },
-      expirationDateTime: P2P.formatLifetime(hours / 24),
+      expirationDateTime: getLifetimeByHours(hours),
       customFields
     })
     return {
