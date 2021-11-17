@@ -1,8 +1,10 @@
 const axios = require("axios")
 
-const { config } = require("../../config")
-
 const { getLifetimeByHours } = require("../../utils")
+
+const config = {
+  PAYMENT_SERVER_URI: "todo"
+}
 
 async function createDemoPayment() {
   return createPayment({

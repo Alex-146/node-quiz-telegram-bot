@@ -1,5 +1,5 @@
 function getConfig() {
-  return require("./config.json")
+  return require("../../config.json")
 }
 
 function getItemById(id) {

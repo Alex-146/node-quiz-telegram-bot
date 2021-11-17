@@ -1,14 +1,10 @@
-const { isConfigValid } = require("./config")
+require("dotenv").config()
 
 const telegram = require("./services/telegram")
 const db = require("./db/mongo")
 const logger = require("./utils/logger")
 
 async function main() {
-  
-  if (!isConfigValid()) {
-    throw new Error("config is not valid")
-  }
 
   const bot = telegram.createBot()
 
