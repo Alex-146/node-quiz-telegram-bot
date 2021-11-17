@@ -12,6 +12,7 @@ const {
 } = require("./telegram/keyboards")
 const payments = require("./qiwi/local")
 const { sleep, shuffle, generateQuiz } = require("../utils")
+const logger = require("../utils/logger")
 
 // todo: separate file
 const actions = {
@@ -48,6 +49,7 @@ function createBot() {
     if (!candidate) {
       // todo: add startPayload
       await createUser(id)
+      logger.info("user created")
       return ctx.scene.enter(SCENE_NAMES.START)
     }
     else {
@@ -100,7 +102,7 @@ function createBot() {
     }
     await user.save()
 
-    await ctx.reply("Be ready!", Markup.removeKeyboard())
+    await ctx.reply("Приготовься!", Markup.removeKeyboard())
     sendNextQuestionToUser(ctx)
   }
 
@@ -198,12 +200,12 @@ function createBot() {
         }
         else if (poll.total_voter_count > 1) {
           // может ли пользователь переслать сообщение чтобы проголосовал кто-то другой?
-          console.log("poll.total_voter_count > 1", poll)
+          logger.warn("poll.total_voter_count > 1", { poll })
         }
       }
       catch(error) {
         // Error: 400: Bad Request: poll has already been closed
-        console.log(error.message)
+        logger.warn(error.message)
       }
     }
     return sleep(wait).then(stopHandler)
@@ -244,11 +246,11 @@ function createBot() {
     const userId = ctx.pollAnswer.user.id
     const answerIndex = ctx.pollAnswer.option_ids[0]
 
-    console.log("poll_answer", pollId, userId, answerIndex)
+    logger.info("poll_answer", { pollId, userId, answerIndex })
 
     const user = await findUserByChatId(userId)
     if (!user) {
-      return console.log("poll_answer from undefined user")
+      return logger.warn("poll_answer from undefined user")
     }
 
     await user.voteInQuiz(answerIndex)
@@ -299,8 +301,9 @@ function createBot() {
       const response = await payments.createBill(item.price, hourDuration, customFields)
 
       if (!response.ok) {
-        const err = response.error
-        console.log("something went wrong when creating bill", err)
+        logger.error(response.error, {
+          msg: "something went wrong when creating bill",
+        })
         const text = ctx.i18n.t("errors.payment")
         return ctx.editMessageText(text)
       }
@@ -336,8 +339,9 @@ function createBot() {
       const response = await payments.rejectBill(bill.billId)
       
       if (!response.ok) {
-        const err = response.error
-        console.log("smth went wrong when cancelling payment", err)
+        logger.error(response.error, {
+          msg: "smth went wrong when cancelling payment"
+        })
         const text = ctx.i18n.t("errors.payment")
         return ctx.editMessageText(text)
       }
@@ -367,8 +371,9 @@ function createBot() {
 
     const response = await payments.getBillStatus(bill.billId)
     if (!response.ok) {
-      const err = response.error
-      console.log("smth went wrong when getting bill status", err)
+      logger.error(response.error, {
+        msg: "smth went wrong when getting bill status"
+      })
       const text = ctx.i18n.t("errors.payment")
       return ctx.editMessageText(text)
     }
@@ -406,6 +411,10 @@ function createBot() {
       const item = getItemById(itemId)
       // check if first payment has active promo, if true - add more points to balance
       const { promocode } = getConfig()
+
+      logger.info("user payment", {
+        bill
+      })
 
       if (user.payments.promocode.active) {
         const amount = item.amount + promocode.bonusAmount
@@ -447,8 +456,14 @@ function createBot() {
     return ctx.reply("Я тебя не понимаю!")
   })
 
-  bot.catch((err, ctx) => {
-    console.log("error catched:", ctx.updateType, ctx.update.update_id, err)
+  bot.catch((error, ctx) => {
+    logger.error(error, {
+      msg: "error catched",
+      update: {
+        type: ctx.updateType,
+        id: ctx.update.update_id,
+      }
+    })
   })
 
   return bot

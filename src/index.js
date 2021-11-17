@@ -2,6 +2,7 @@ const { isConfigValid } = require("./config")
 
 const telegram = require("./services/telegram")
 const db = require("./db/mongo")
+const logger = require("./utils/logger")
 
 async function main() {
   
@@ -15,13 +16,14 @@ async function main() {
     await db.connect()
     await bot.telegram.deleteWebhook({ drop_pending_updates: true })
     await bot.launch()
-    console.log("application started")
+    
+    logger.info("application started")
 
     process.once("SIGINT", () => bot.stop("SIGINT"))
     process.once("SIGTERM", () => bot.stop("SIGTERM"))
   }
   catch(error) {
-    console.log(error)
+    logger.error(error)
 
     bot.stop()
   }
