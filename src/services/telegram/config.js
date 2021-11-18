@@ -1,5 +1,9 @@
+const fs = require("fs")
+const path = require("path")
+
 function getConfig() {
-  return require("../../config.json")
+  const pathToJson = path.resolve("src", "config.json")
+  return JSON.parse(fs.readFileSync(pathToJson))
 }
 
 function getItemById(id) {

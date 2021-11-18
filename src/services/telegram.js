@@ -19,7 +19,8 @@ const actions = {
   developer: {
     addBalance: "developer:addBalance",
     resetBalance: "developer:resetBalance",
-    resetHistory: "developer:resetHistory"
+    resetHistory: "developer:resetHistory",
+    showConfig: "developer:showConfig",
   }
 }
 
@@ -144,6 +145,7 @@ function createBot() {
       [Markup.button.callback("Добавить money", actions.developer.addBalance)],
       [Markup.button.callback("Обнулить money", actions.developer.resetBalance)],
       [Markup.button.callback("Очистить историю", actions.developer.resetHistory)],
+      [Markup.button.callback("Показать конфиг", actions.developer.showConfig)],
     ])
     return ctx.reply(text, keyboard)
   }
@@ -171,6 +173,13 @@ function createBot() {
     await user.save()
     ctx.answerCbQuery()
     return ctx.reply("Очищено")
+  }
+
+  async function developerShowConfig(ctx) {
+    const json = JSON.stringify(getConfig(), null, 2)
+    const text = `<code>${json}</code>`
+    await ctx.answerCbQuery()
+    return ctx.replyWithHTML(text)
   }
 
   const sendNextQuestionToUser = async (ctx) => {
@@ -446,6 +455,8 @@ function createBot() {
   bot.action(actions.developer.resetBalance, fetchUser(), developerAccess(), developerResetBalance)
 
   bot.action(actions.developer.resetHistory, fetchUser(), developerAccess(), developerResetHistory)
+
+  bot.action(actions.developer.showConfig, fetchUser(), developerAccess(), developerShowConfig)
 
   // bot.on("text", fetchUser(), ctx => {
   //   throw new Error("foo")
