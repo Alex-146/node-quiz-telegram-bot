@@ -3,7 +3,7 @@ const TelegrafI18n = require("telegraf-i18n")
 const path = require("path")
 const { SCENE_NAMES, stage } = require("./telegram/scenes")
 const { getConfig, getItemById } = require("./telegram/config")
-const { createUser, findUserByChatId } = require("../db/mongo")
+const { createUser, findUserByChatId, getUsersCount } = require("../db/mongo")
 const { fetchUser, developerAccess, fetchItem } = require("./telegram/middleware")
 const {
   paymentInlineKeyboard,
@@ -20,6 +20,7 @@ const actions = {
     addBalance: "developer:addBalance",
     resetBalance: "developer:resetBalance",
     resetHistory: "developer:resetHistory",
+    printUsersCount: "developer:usersCount",
     showConfig: "developer:showConfig",
   }
 }
@@ -78,7 +79,15 @@ function createBot() {
     const user = ctx.state.user
     const config = getConfig()
 
-    const allQuestions = require(config.quiz.pathToJson)
+    if (user.payments.balance < config.quiz.playPrice) {
+      const text = ctx.i18n.t("quiz.not-allowed", { user, config })
+      return ctx.reply(text)
+    }
+    
+    user.payments.balance -= config.quiz.playPrice
+
+    const p = user.quiz.history.length > 0 ? config.quiz.pathToJson : config.quiz.pathToJsonEasy
+    const allQuestions = require(p)
 
     // получить все вопросы викторин у которых проголосовал пользователь
     const used = user.quiz.history.map(entry => entry.questions.filter(q => q.answerIndex !== -1).map(q => q.text)).flat()
@@ -90,13 +99,7 @@ function createBot() {
       const text = ctx.i18n.t("quiz.out-of-questions")
       return ctx.reply(text)
     }
-
-    if (user.payments.balance < config.quiz.playPrice) {
-      const text = ctx.i18n.t("quiz.not-allowed", { user, config })
-      return ctx.reply(text)
-    }
     
-    user.payments.balance -= config.quiz.playPrice
     user.quiz.current = {
       index: 0,
       questions: generateQuiz(shuffle(unused).slice(0, config.quiz.amountOfQuestions)),
@@ -146,6 +149,7 @@ function createBot() {
       [Markup.button.callback("Обнулить money", actions.developer.resetBalance)],
       [Markup.button.callback("Очистить историю", actions.developer.resetHistory)],
       [Markup.button.callback("Показать конфиг", actions.developer.showConfig)],
+      [Markup.button.callback("Кол-во юзеров", actions.developer.printUsersCount)],
     ])
     return ctx.reply(text, keyboard)
   }
@@ -180,6 +184,12 @@ function createBot() {
     const text = `<code>${json}</code>`
     await ctx.answerCbQuery()
     return ctx.replyWithHTML(text)
+  }
+
+  async function developerPrintUsersCount(ctx) {
+    const count = await getUsersCount()
+    await ctx.answerCbQuery()
+    return ctx.reply(count)
   }
 
   const sendNextQuestionToUser = async (ctx) => {
@@ -457,6 +467,8 @@ function createBot() {
   bot.action(actions.developer.resetHistory, fetchUser(), developerAccess(), developerResetHistory)
 
   bot.action(actions.developer.showConfig, fetchUser(), developerAccess(), developerShowConfig)
+
+  bot.action(actions.developer.printUsersCount, fetchUser(), developerAccess(), developerPrintUsersCount)
 
   // bot.on("text", fetchUser(), ctx => {
   //   throw new Error("foo")

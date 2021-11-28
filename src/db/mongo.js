@@ -36,6 +36,10 @@ function findUserByChatId(id) {
   return User.findOne({ "client.id": id })
 }
 
+function getUsersCount() {
+  return User.estimatedDocumentCount()
+}
+
 // done in schema methods
 async function generateQuizForUser(id) {
   const user = await findUserByChatId(id)
@@ -131,6 +135,8 @@ module.exports = {
   close,
   createUser,
   findUserByChatId,
+  getUsersCount,
+  
   generateQuizForUser,
   restoreQuizForUser,
   userVoteInQuiz,
