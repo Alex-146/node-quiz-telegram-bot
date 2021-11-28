@@ -25,8 +25,8 @@
     "devItems": [
       {
         "id": "devItem",
-        "title": "dev:100💰 — 1 ₽",
-        "amount": 100,
+        "title": "dev:1💰 — 1 ₽",
+        "amount": 1,
         "price": 1
       }
     ],

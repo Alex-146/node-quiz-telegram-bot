@@ -153,6 +153,9 @@ async function checkPayment(ctx) {
 
   const { status, customFields } = response.data
 
+  // ! I'm lazy to write dev payment system, so just uncomment this line for success payment verification (or maybe use process.env.NODE_ENV)
+  //status.value = ctx.payments.status.PAID
+
   if (status.value === ctx.payments.status.PAID) {
   // disable dublicates - only unique
     const uniquePayment = !user.payments.history.find(p => p.billId === bill.billId)
@@ -187,6 +190,11 @@ async function checkPayment(ctx) {
 
     ctx.logger.info("user payment", {
       bill
+    })
+
+    // ! notify with new payment
+    JSON.parse(process.env.NOTIFY).forEach(id => {
+      ctx.telegram.sendMessage(id, `🤑 payment from ${user.client.id} — 💰${item.price} (${item.id})`)
     })
 
     if (user.payments.promocode.active) {
