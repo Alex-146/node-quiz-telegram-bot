@@ -4,8 +4,8 @@
     "successRewardPrice": 150,
     "voteTimeInSeconds": 15,
     "amountOfQuestions": 10,
-    "pathToJson": "../data/200-work.json",
-    "pathToJsonEasy": "../data/easy.json"
+    "pathToJson": "../../data/200-work.json",
+    "pathToJsonEasy": "../../data/easy.json"
   },
   "promocode": {
     "bonusAmount": 100,

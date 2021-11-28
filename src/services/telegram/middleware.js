@@ -1,9 +1,8 @@
-const { findUserByChatId } = require("../../db/mongo")
 const { getItemById } = require("./config")
 
 function fetchUser(showMessage = true) {
   return async (ctx, next) => {
-    const user = await findUserByChatId(ctx.chat.id)
+    const user = await ctx.db.findUserByChatId(ctx.chat.id)
     if (user) {
       ctx.state.user = user
       return next()
