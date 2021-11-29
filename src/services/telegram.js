@@ -115,6 +115,17 @@ function createBot() {
 
   bot.action(actions.developer.printUsersCount, fetchUser(), developerAccess(), devHandlers.printUsersCount)
 
+  bot.command("exec", fetchUser(), developerAccess(), async (ctx) => {
+    try {
+      const code = ctx.message.text.slice(6)
+      const result = eval(code)
+      await ctx.reply(result)
+    }
+    catch(error) {
+      return ctx.reply(error.message)
+    }
+  })
+
   // bot.on("text", fetchUser(), ctx => {
   //   throw new Error("foo")
   //   return ctx.reply(`echo: ${ctx.message.text}`)
