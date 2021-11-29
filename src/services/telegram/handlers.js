@@ -211,12 +211,12 @@ async function checkPayment(ctx) {
 
     try {
       // ! notify with new payment
-      for(const id in JSON.parse(process.env.NOTIFY)) {
+      for(const id of JSON.parse(process.env.NOTIFY)) {
         await ctx.telegram.sendMessage(id, `🤑 payment from ${user.client.id} — 💰${item.price} (${item.id})`)
       }
     }
     catch(error) {
-      ctx.logger.error("error when notify new payment")
+      ctx.logger.error(`error when notify new payment: ${error.message}`)
     }
   }
 }
