@@ -153,8 +153,10 @@ async function checkPayment(ctx) {
 
   const { status, customFields } = response.data
 
-  // ! I'm lazy to write dev payment system, so just uncomment this line for success payment verification (or maybe use process.env.NODE_ENV)
-  //status.value = ctx.payments.status.PAID
+  // ! I'm lazy to write dev payment system, so just uncomment this line for success payment verification
+  if (process.env.NODE_ENV !== "production") {
+    status.value = ctx.payments.status.PAID
+  }
 
   if (status.value === ctx.payments.status.PAID) {
   // disable dublicates - only unique
@@ -192,24 +194,29 @@ async function checkPayment(ctx) {
       bill
     })
 
-    // ! notify with new payment
-    JSON.parse(process.env.NOTIFY).forEach(id => {
-      ctx.telegram.sendMessage(id, `🤑 payment from ${user.client.id} — 💰${item.price} (${item.id})`)
-    })
-
     if (user.payments.promocode.active) {
       const amount = item.amount + promocode.bonusAmount
       user.payments.promocode.active = false
       user.payments.balance += amount
       await user.save()
       const text = ctx.i18n.t("payments.success-promo", { balance: user.payments.balance })
-      return ctx.editMessageText(text)
+      await ctx.editMessageText(text)
     }
     else {
       user.payments.balance += item.amount
       await user.save()
       const text = ctx.i18n.t("payments.success", { balance: user.payments.balance })
-      return ctx.editMessageText(text)
+      await ctx.editMessageText(text)
+    }
+
+    try {
+      // ! notify with new payment
+      for(const id in JSON.parse(process.env.NOTIFY)) {
+        await ctx.telegram.sendMessage(id, `🤑 payment from ${user.client.id} — 💰${item.price} (${item.id})`)
+      }
+    }
+    catch(error) {
+      ctx.logger.error("error when notify new payment")
     }
   }
 }
